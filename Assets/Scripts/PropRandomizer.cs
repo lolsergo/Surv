@@ -9,7 +9,7 @@ public class PropRandomizer : MonoBehaviour
 
     void Start()
     {
-
+        SpawnProps();
     }
 
     void Update()
@@ -22,6 +22,8 @@ public class PropRandomizer : MonoBehaviour
         foreach (GameObject spawnProp in propSpawnPoints)
         {
             int rand = Random.Range(0, propPrefabs.Count);
+            GameObject prop = Instantiate(propPrefabs[rand], spawnProp.transform.position, Quaternion.identity);
+            prop.transform.parent= spawnProp.transform;
         }
     }
 }
