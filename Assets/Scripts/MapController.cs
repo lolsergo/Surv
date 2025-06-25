@@ -8,10 +8,10 @@ public class MapController : MonoBehaviour
     public List<GameObject> terrainChunks;
     public GameObject player;
     public float checkerRadius;
-    Vector3 noTerrainPosition;
     public LayerMask terrainMask;
     public GameObject currentChunk;
-    
+    Vector3 playerLastPosition;
+
 
     [Header("Optimization")]
     public List<GameObject> spawnedChunks;
@@ -23,7 +23,7 @@ public class MapController : MonoBehaviour
 
     void Start()
     {
-        
+        playerLastPosition = player.transform.position;
     }
 
     void Update()
@@ -37,6 +37,16 @@ public class MapController : MonoBehaviour
         if (!currentChunk)
         {
             return;
+        }
+
+        Vector3 moveDirection = player.transform.position - playerLastPosition;
+        playerLastPosition = player.transform.position;
+
+        string directionName = GetDirectionName(moveDirection);
+
+        if (!Physics2D.OverlapCircle(currentChunk.transform.Find(directionName).position, checkerRadius, terrainMask))
+        {
+            SpawnChunk(currentChunk.transform.Find(directionName).position);
         }
 
         //if (playerMovement.moveDirection.x > 0 && playerMovement.moveDirection.y == 0) //right
@@ -105,10 +115,48 @@ public class MapController : MonoBehaviour
         //}
     }
 
-    void SpawnChunk()
+    string GetDirectionName(Vector3 direction)
+    {
+        direction = direction.normalized;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            // move horizontal more than vertical
+            if (direction.y > 0.5f)
+            {
+                return direction.x > 0 ? "Up+Right" : "Up+Left";
+            }
+            else if (direction.y < -0.5f)
+            {
+                return direction.x > 0 ? "Down+Right" : "Down+Left";
+            }
+            else
+            {
+                return direction.x > 0 ? "Right" : "Left";
+            }
+        }
+        else
+        {
+            // move vertical more than horizontal
+            if (direction.x > 0.5f)
+            {
+                return direction.y > 0 ? "Up+Right" : "Down+Right";
+            }
+            else if (direction.x < -0.5f)
+            {
+                return direction.y > 0 ? "Up+Left" : "Down+Left";
+            }
+            else
+            {
+                return direction.y > 0 ? "Up" : "Down";
+            }
+        }
+    }
+
+    void SpawnChunk(Vector3 spawnPosition)
     {
         int rand = Random.Range(0, terrainChunks.Count);
-        latestChunk = Instantiate(terrainChunks[rand], noTerrainPosition, Quaternion.identity);
+        latestChunk = Instantiate(terrainChunks[rand], spawnPosition, Quaternion.identity);
         spawnedChunks.Add(latestChunk);
     }
 
@@ -125,17 +173,17 @@ public class MapController : MonoBehaviour
             return;
         }
 
-            foreach (GameObject chunk in spawnedChunks)
+        foreach (GameObject chunk in spawnedChunks)
+        {
+            optimizedDistance = Vector3.Distance(player.transform.position, chunk.transform.position);
+            if (optimizedDistance > maxOptimizedDistance)
             {
-                optimizedDistance = Vector3.Distance(player.transform.position, chunk.transform.position);
-                if (optimizedDistance > maxOptimizedDistance)
-                {
-                    chunk.SetActive(false);
-                }
-                else
-                {
-                    chunk.SetActive(true);
-                }
+                chunk.SetActive(false);
             }
+            else
+            {
+                chunk.SetActive(true);
+            }
+        }
     }
 }
