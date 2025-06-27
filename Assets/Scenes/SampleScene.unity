@@ -119,6 +119,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &30655288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6699704287367554983, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &189326624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9036644241486088727, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &374511392
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +162,15 @@ MonoBehaviour:
   - {fileID: 7013230502182758829, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
   - {fileID: 7013230502182758829, guid: 80819dd0ab81dde448f85bf4a7e9838f, type: 3}
   - {fileID: 7013230502182758829, guid: b77c9b7a8bd5bcd4d8c0ee7933d2d2ba, type: 3}
+  moveDirections:
+  - {fileID: 827863906}
+  - {fileID: 781057928}
+  - {fileID: 2026062198}
+  - {fileID: 888062766}
+  - {fileID: 30655288}
+  - {fileID: 1083363663}
+  - {fileID: 189326624}
+  - {fileID: 1548564660}
   player: {fileID: 1911237467}
   checkerRadius: 0.2
   terrainMask:
@@ -418,6 +437,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7013230502182758829, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
   m_PrefabInstance: {fileID: 3394015862800863430}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &781057928 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2988826111966511761, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &827863906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 706179989675507439, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &888062766 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 278046844592432408, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1083363663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2319809268451646854, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1548564660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8664714639855602507, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1911237467
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +677,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06441e9983af11418d0cae5bb524454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2026062198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6253396956753081062, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
+  m_PrefabInstance: {fileID: 3394015862800863430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3394015862800863430
 PrefabInstance:
   m_ObjectHideFlags: 0
