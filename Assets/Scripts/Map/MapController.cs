@@ -6,7 +6,7 @@ using UnityEngine;
 public class MapController : MonoBehaviour
 {
     public List<GameObject> terrainChunks;
-    public List<GameObject> moveDirections;
+    public List<GameObject> moveDirectionNames;
     public GameObject player;
     public float checkerRadius;
     public LayerMask terrainMask;
@@ -48,9 +48,9 @@ public class MapController : MonoBehaviour
         int previousDirectionID = 0;
         int nextDirectionID = 2;
 
-        for (int i = 0; i < moveDirections.Count; i++)
+        for (int i = 0; i < moveDirectionNames.Count; i++)
         {
-            if (moveDirections[i].name == directionName)
+            if (moveDirectionNames[i].name == directionName)
             {
                 directionID = i;
                 break;
@@ -59,10 +59,10 @@ public class MapController : MonoBehaviour
 
         if (directionID == 0)
         {
-            previousDirectionID = moveDirections.Count - 1;
+            previousDirectionID = moveDirectionNames.Count - 1;
             nextDirectionID = directionID + 1;
         }
-        else if (directionID == moveDirections.Count - 1)
+        else if (directionID == moveDirectionNames.Count - 1)
         {
             previousDirectionID = directionID - 1;
             nextDirectionID = 0;
@@ -73,16 +73,16 @@ public class MapController : MonoBehaviour
             nextDirectionID = directionID + 1;
         }
 
-        CheckAndSpawnChunk(moveDirections[directionID].name);
-        CheckAndSpawnChunk(moveDirections[previousDirectionID].name);
-        CheckAndSpawnChunk(moveDirections[nextDirectionID].name);
+        CheckAndSpawnChunk(moveDirectionNames[directionID].name);
+        CheckAndSpawnChunk(moveDirectionNames[previousDirectionID].name);
+        CheckAndSpawnChunk(moveDirectionNames[nextDirectionID].name);
     }
 
-    void CheckAndSpawnChunk(string direction)
+    void CheckAndSpawnChunk(string directionName)
     {
-        if (!Physics2D.OverlapCircle(currentChunk.transform.Find(direction).position, checkerRadius, terrainMask))
+        if (!Physics2D.OverlapCircle(currentChunk.transform.Find(directionName).position, checkerRadius, terrainMask))
         {
-            SpawnChunk(currentChunk.transform.Find(direction).position);
+            SpawnChunk(currentChunk.transform.Find(directionName).position);
         }
     }
 

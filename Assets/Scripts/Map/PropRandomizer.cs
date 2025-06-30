@@ -23,7 +23,7 @@ public class PropRandomizer : MonoBehaviour
         {
             int rand = Random.Range(0, propPrefabs.Count);
             GameObject prop = Instantiate(propPrefabs[rand], spawnProp.transform.position, Quaternion.identity);
-            prop.transform.parent= spawnProp.transform;
+            prop.transform.parent = spawnProp.transform;
         }
     }
 }
