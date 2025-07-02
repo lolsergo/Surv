@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class ProjectileWeaponBehaviour : MonoBehaviour
+public class MeleeWeaponBehaviour : MonoBehaviour
 {
-    protected Vector3 direction;
     public float destroyAfterSecons;
 
     protected virtual void Start()
@@ -10,8 +9,8 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
         Destroy(gameObject, destroyAfterSecons);
     }
 
-    public void DirectionChecker(Vector2 dir)
+    void Update()
     {
-        direction = dir;
+        
     }
 }

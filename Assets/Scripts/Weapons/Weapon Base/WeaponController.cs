@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void Start()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindFirstObjectByType<PlayerMovement>();
         currentCooldown = cooldownDuration;
     }
 

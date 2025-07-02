@@ -10,13 +10,15 @@ public class PlayerMovement : MonoBehaviour
     public float lastVerticalVector;
     [HideInInspector]
     public Vector2 moveDirection;
+    [HideInInspector]
+    public Vector2 lastMovedVector;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        lastMovedVector = new Vector2(1, 0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         InputManagment();
@@ -37,17 +39,24 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.x != 0)
         {
             lastHorizontalVector = moveDirection.x;
+            lastMovedVector = new Vector2(lastHorizontalVector, 0f);
         }
 
         if (moveDirection.y != 0)
         {
             lastVerticalVector = moveDirection.y;
+            lastMovedVector = new Vector2(0f, lastVerticalVector);
+        }
+
+        if (moveDirection.x != 0 && moveDirection.y != 0)
+        {
+            lastMovedVector = new Vector2(lastHorizontalVector, lastVerticalVector);
         }
     }
+    void Move()
+    {
+        rigidBody.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+    }
 
-        void Move()
-        {
-            rigidBody.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-        }
-    
 }
+

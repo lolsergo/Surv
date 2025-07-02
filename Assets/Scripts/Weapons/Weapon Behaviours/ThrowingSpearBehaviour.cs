@@ -7,7 +7,7 @@ public class ThrowingSpearBehaviour : ProjectileWeaponBehaviour
     protected override void Start()
     {
         base.Start();
-        throwingSpearController = FindObjectOfType<ThrowingSpearController>();
+        throwingSpearController = FindFirstObjectByType<ThrowingSpearController>();
     }
 
     void Update()

@@ -13,6 +13,6 @@ public class ThrowingSpearController : WeaponController
         base.Attack();
         GameObject spawnedSpear = Instantiate(prefab);
         spawnedSpear.transform.position = transform.position;
-        spawnedSpear.GetComponent<ThrowingSpearBehaviour>().DirectionChecker(playerMovement.moveDirection);
+        spawnedSpear.GetComponent<ThrowingSpearBehaviour>().DirectionChecker(playerMovement.lastMovedVector);
     }
 }
