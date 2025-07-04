@@ -12,7 +12,7 @@ public class PentagramController : WeaponController
     protected override void Attack()
     {
         base.Attack();
-        GameObject spawnedPentagram = Instantiate(prefab);
+        GameObject spawnedPentagram = Instantiate(weaponData.Prefab);
         spawnedPentagram.transform.position = transform.position;
         spawnedPentagram.transform.parent = transform;
     }
