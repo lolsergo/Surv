@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe389c5623baa8a47a97ec6e4ed1a8c9, type: 3}
-  m_Name: Pentagram Weapon
+  m_Script: {fileID: 11500000, guid: aba70dc9c9c65b243945a710cf73b044, type: 3}
+  m_Name: BarbarianWithSpear
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1807295204169746668, guid: 2d21127f787ae384db98fe05628ca149, type: 3}
-  damage: 5
-  flightSpeed: 0
-  cooldownDuration: 3
-  pierce: 0
+  baseWeapon: {fileID: 0}
+  maxHealth: 0
+  healthRegen: 0
+  moveSpeed: 5
+  might: 0
+  projectileSpeed: 0

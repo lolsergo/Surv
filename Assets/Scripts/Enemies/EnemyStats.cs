@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public EnemyScriptableObject enemyData;
+    public CurrentPlayerStats currentPlayerStats;
 
     float currentMoveSpeed;
     float currentHealth;
@@ -21,6 +22,7 @@ public class EnemyStats : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentPlayerStats.IncreaseExpirience(enemyData.ExpPerKill);
             Kill();
         }
     }
