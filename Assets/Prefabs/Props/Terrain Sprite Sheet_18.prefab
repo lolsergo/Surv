@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 2934496993231008937}
   - component: {fileID: 711520075064331121}
   - component: {fileID: -910838490057174591}
+  - component: {fileID: 5443995845851508319}
+  - component: {fileID: -8498041040134776647}
   m_Layer: 0
   m_Name: Terrain Sprite Sheet_18
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +120,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -134,3 +136,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &5443995845851508319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573771761148332016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff548352a9b1774796e43e90ebea57f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropRateManager: {fileID: -8498041040134776647}
+  health: 10
+--- !u!114 &-8498041040134776647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573771761148332016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe8fa0b2f473f843a6fbfaebb398d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - name: Health Potion
+    itemPrefab: {fileID: 7909573941771639975, guid: 71ba0696a75c1e8488e878206083560f, type: 3}
+    dropRate: 100

@@ -28,6 +28,11 @@ public class CurrentPlayerStats : MonoBehaviour
         public int experienceCapIncrease;
     }
 
+    [Header("I-Frames")]
+    public float invincibilityDuration;
+    float invincibilityTimer;
+    bool isInvincibile;
+
     public List<LevelRange> levelRanges;
     void Awake()
     {
@@ -43,6 +48,18 @@ public class CurrentPlayerStats : MonoBehaviour
         experienceCap = levelRanges[0].experienceCapIncrease;
     }
 
+    private void Update()
+    {
+        if (invincibilityTimer > 0)
+        {
+            invincibilityTimer -= Time.deltaTime;
+        }
+        else if (isInvincibile)
+        {
+            isInvincibile = false;
+        }
+    }
+
     public void IncreaseExpirience(int amount)
     {
         experience += amount;
@@ -54,6 +71,16 @@ public class CurrentPlayerStats : MonoBehaviour
         currentGold += amount;
     }
 
+    public void RestoreHealth(int amount)
+    {
+        currentHealth += amount;
+
+        if (currentHealth > characterData.MaxHealth)
+        {
+            currentHealth = characterData.MaxHealth;
+        }
+    }
+
     void LevelUpChecker()
     {
         if (experience >= experienceCap)
@@ -62,6 +89,7 @@ public class CurrentPlayerStats : MonoBehaviour
             experience -= experienceCap;
 
             int experienceCapIncrease = 0;
+
             foreach (LevelRange levelRange in levelRanges)
             {
                 if (level >= levelRange.startingLevel && level <= levelRange.endingLevel)
@@ -72,5 +100,31 @@ public class CurrentPlayerStats : MonoBehaviour
             }
             experienceCap += experienceCapIncrease;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (!isInvincibile)
+        {
+            currentHealth -= damage;
+
+            invincibilityTimer = invincibilityDuration;
+            isInvincibile = true;
+
+            if (currentHealth <= 0)
+            {
+                Kill();
+            }
+        }
+    }
+
+    public void Kill()
+    {
+        Debug.Log("YOU DIED");
+    }
+
+    public bool IsHealthFull()
+    {
+        return currentHealth == characterData.MaxHealth;
     }
 }

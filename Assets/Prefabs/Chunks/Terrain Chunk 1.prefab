@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3113999369180152165}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2995442017051625962}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 6
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6465118919552781653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Up+Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5531115899105527294}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Down+Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7005562340938080169}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3479909838401523973}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 5
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2989009265875700855}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 4
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6018066297671718609}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 3
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 586972287756666430}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 2
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -288,7 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4448290943984996492}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Down+Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3800531103707678116}
   - component: {fileID: 3931983850155353719}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Background Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 646903425756497483}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Prop Location 1
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4607613023472651161}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5173454133749544316}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 8843415116627801652}
   - component: {fileID: 2533801775654948136}
   - component: {fileID: 8881964517747167265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 741803052409214749}
   - component: {fileID: 6229702889101018727}
   - component: {fileID: 2360648504499634292}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Terrain Chunk 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2363418129776219491}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 5011485730437394400}
   - component: {fileID: 7021333085446001473}
   - component: {fileID: 3522430157035209091}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Background Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4871,7 +4871,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7917177158216486746}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Up+Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3,7 +3,8 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     public EnemyScriptableObject enemyData;
-    public CurrentPlayerStats currentPlayerStats;
+
+    private DropRateManager dropRateManager;
 
     float currentMoveSpeed;
     float currentHealth;
@@ -14,6 +15,9 @@ public class EnemyStats : MonoBehaviour
         currentMoveSpeed = enemyData.MoveSpeed;
         currentDamage = enemyData.Damage;
         currentHealth = enemyData.MaxHealth;
+
+        dropRateManager=GetComponent<DropRateManager>();
+        if (dropRateManager == null) Debug.LogError("ItemDropper не найден!", this);
     }
 
     public void TakeDamage(float damage)
@@ -22,13 +26,18 @@ public class EnemyStats : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            currentPlayerStats.IncreaseExpirience(enemyData.ExpPerKill);
-            Kill();
+            CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
+            player.IncreaseExpirience(enemyData.ExpPerKill);
+            dropRateManager.Die();
         }
     }
 
-    public void Kill() 
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            CurrentPlayerStats playerStats = collision.gameObject.GetComponent<CurrentPlayerStats>();
+            playerStats.TakeDamage(currentDamage);
+        }
     }
 }

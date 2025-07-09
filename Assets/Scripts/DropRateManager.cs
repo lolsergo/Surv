@@ -14,7 +14,13 @@ public class DropRateManager : MonoBehaviour
 
     public List<Drops> drops;
 
-    private void OnDestroy()
+    public void Die()
+    {
+        DropItem();
+        Destroy(gameObject);
+    }
+
+    private void DropItem()
     {
         float randomNumber = UnityEngine.Random.Range(0f, 100f);
         List<Drops> possibleDrops = new List<Drops>();
@@ -25,7 +31,6 @@ public class DropRateManager : MonoBehaviour
             {
                 possibleDrops.Add(rate);
             }
-
         }
 
         if (possibleDrops.Count > 0)

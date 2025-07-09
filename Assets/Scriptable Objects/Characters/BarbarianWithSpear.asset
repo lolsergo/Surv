@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BarbarianWithSpear
   m_EditorClassIdentifier: 
   baseWeapon: {fileID: 0}
-  maxHealth: 0
+  maxHealth: 100
   healthRegen: 0
   moveSpeed: 5
   might: 0

@@ -175,8 +175,8 @@ MonoBehaviour:
   checkerRadius: 0.2
   terrainMask:
     serializedVersion: 2
-    m_Bits: 64
-  currentChunk: {fileID: 0}
+    m_Bits: 128
+  currentChunk: {fileID: 778566112}
   spawnedChunks:
   - {fileID: 778566112}
   maxOptimizedDistance: 50
@@ -196,6 +196,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &463795875 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1802484466754228543, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+  m_PrefabInstance: {fileID: 4014996465374585401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe8fa0b2f473f843a6fbfaebb398d36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +579,7 @@ GameObject:
   - component: {fileID: 1911237473}
   - component: {fileID: 1911237474}
   - component: {fileID: 1911237475}
+  - component: {fileID: 1911237476}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -788,6 +800,7 @@ MonoBehaviour:
   level: 1
   experienceCap: 0
   currentGold: 0
+  invincibilityDuration: 0.5
   levelRanges:
   - startingLevel: 1
     endingLevel: 3
@@ -795,6 +808,18 @@ MonoBehaviour:
   - startingLevel: 4
     endingLevel: 5
     experienceCapIncrease: 200
+--- !u!114 &1911237476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911237467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7339c7b5162ed24990db7888afe5167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2026062198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6253396956753081062, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
@@ -1207,8 +1232,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1802484466754228543, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
       propertyPath: drops.Array.data[0].dropRate
-      value: 99
+      value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2957661436129825963, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+      propertyPath: dropRateManager
+      value: 
+      objectReference: {fileID: 463795875}
     - target: {fileID: 2957661436129825963, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
       propertyPath: currentPlayerStats
       value: 
@@ -1258,11 +1287,23 @@ PrefabInstance:
       value: Bat
       objectReference: {fileID: 0}
     - target: {fileID: 6112268221958819346, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112268221958819346, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7957989601960657332, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331939922490459046, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544824707089032789, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+      propertyPath: m_WriteDefaultValuesOnDisable
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
