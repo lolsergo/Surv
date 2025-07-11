@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba70dc9c9c65b243945a710cf73b044, type: 3}
   m_Name: BarbarianWithSpear
   m_EditorClassIdentifier: 
-  baseWeapon: {fileID: 0}
+  baseWeapon: {fileID: 6055654875595998007, guid: dfb3ef15919b21f45812bb3b9b4de535, type: 3}
   maxHealth: 100
-  healthRegen: 0
+  healthRegen: 1
   moveSpeed: 5
   might: 0
-  projectileSpeed: 0
+  magnetRadius: 20

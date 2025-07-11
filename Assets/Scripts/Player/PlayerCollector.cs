@@ -2,11 +2,29 @@ using UnityEngine;
 
 public class PlayerCollector : MonoBehaviour
 {
+    CurrentPlayerStats playerStats;
+    CircleCollider2D magnetCollector;
+    
+    public float pullSpeed;
+
+    void Start()
+    {
+        playerStats = FindFirstObjectByType<CurrentPlayerStats>();
+        magnetCollector = GetComponent<CircleCollider2D>();
+    }
+
+    void Update()
+    {
+        magnetCollector.radius = playerStats.currentMagnetRadius;
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collider.TryGetComponent(out iCollectible collectible))
+        if (collider.gameObject.TryGetComponent(out ICollectible collectible))
         {
-            collectible.Collect();
+            Rigidbody2D rigidBody = collider.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 forceDirection = (transform.position - collider.transform.position).normalized;
+            rigidBody.AddForce(forceDirection * pullSpeed);
         }
     }
 }

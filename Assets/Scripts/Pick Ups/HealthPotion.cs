@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthPotion : MonoBehaviour, iCollectible
+public class HealthPotion : PickUps, ICollectible
 {
     public int healthGranted;
 
@@ -10,7 +10,6 @@ public class HealthPotion : MonoBehaviour, iCollectible
         if (!player.IsHealthFull())
         {
             player.RestoreHealth(healthGranted);
-            Destroy(gameObject);
         }
     }
 }

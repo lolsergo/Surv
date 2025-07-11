@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public EnemyScriptableObject enemyData;
     Transform player;
+    EnemyStats enemyStats;
 
     void Start()
     {
+        enemyStats = GetComponent<EnemyStats>();
         player = FindFirstObjectByType<PlayerMovement>().transform;
     }
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.position, enemyData.MoveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.position, enemyStats.currentMoveSpeed * Time.deltaTime);
     }
 }

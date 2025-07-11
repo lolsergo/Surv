@@ -9,6 +9,6 @@ public class ThrowingSpearBehaviour : ProjectileWeaponBehaviour
 
     void Update()
     {
-        transform.position += direction * weaponData.FlightSpeed * Time.deltaTime;
+        transform.position += direction * currentProjectileSpeed * Time.deltaTime;
     }
 }

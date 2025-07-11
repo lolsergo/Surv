@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9065282741017536677}
   - component: {fileID: 1077753795819395252}
   - component: {fileID: 8372613838838542478}
+  - component: {fileID: 5224510531640768063}
   m_Layer: 0
   m_Name: Health Potion
   m_TagString: Untagged
@@ -102,7 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthGranted: 50
-  dropRateManager: {fileID: 0}
 --- !u!60 &8372613838838542478
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -167,3 +167,30 @@ PolygonCollider2D:
       - {x: 0.08195877, y: 0.26477885}
       - {x: 0.052000254, y: 0.29797006}
   m_UseDelaunayMesh: 0
+--- !u!50 &5224510531640768063
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7909573941771639975}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

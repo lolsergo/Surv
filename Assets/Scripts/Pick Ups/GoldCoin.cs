@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GoldCoin : MonoBehaviour, iCollectible
+public class GoldCoin : PickUps, ICollectible
 {
     int goldGranted;
     public int maxGoldGranted;
@@ -14,6 +14,5 @@ public class GoldCoin : MonoBehaviour, iCollectible
     {
         CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
         player.IncreaseGold(goldGranted);
-        Destroy(gameObject);
     }
 }

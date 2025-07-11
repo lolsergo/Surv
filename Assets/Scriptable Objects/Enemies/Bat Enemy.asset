@@ -15,4 +15,4 @@ MonoBehaviour:
   moveSpeed: 4
   damage: 30
   maxHealth: 10
-  expPerKill: 50
+  expPerKill: 9999999

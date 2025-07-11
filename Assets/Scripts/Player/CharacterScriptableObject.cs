@@ -24,6 +24,6 @@ public class CharacterScriptableObject : ScriptableObject
     public float Might { get => might; private set => might = value; }
 
     [SerializeField]
-    float projectileSpeed;
-    public float ProjectileSpeed { get => projectileSpeed; private set => projectileSpeed = value; }
+    float magnetRadius;
+    public float MagnetRadius { get => magnetRadius; private set => magnetRadius = value; }
 }

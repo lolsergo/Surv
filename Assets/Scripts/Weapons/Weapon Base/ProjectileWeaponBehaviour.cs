@@ -10,14 +10,14 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
     public float angleOffset = 0f;
 
     protected float currentDamage;
-    protected float currentSpeed;
+    protected float currentProjectileSpeed;
     protected float currentCooldownDuration;
     protected int currentPierce;
 
     void Awake()
     {
         currentDamage = weaponData.Damage;
-        currentSpeed = weaponData.FlightSpeed;
+        currentProjectileSpeed = weaponData.ProjectileSpeed;
         currentPierce = weaponData.Pierce;
         currentCooldownDuration = weaponData.CooldownDuration;
     }
