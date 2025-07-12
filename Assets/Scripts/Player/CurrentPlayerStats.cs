@@ -7,7 +7,7 @@ public class CurrentPlayerStats : MonoBehaviour
 {
     CharacterScriptableObject characterData;
 
-    [HideInInspector]
+
     public float currentHealth;
     [HideInInspector]
     public float currentHealthRegen;

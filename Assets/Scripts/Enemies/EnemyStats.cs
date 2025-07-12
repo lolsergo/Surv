@@ -1,4 +1,5 @@
 using UnityEngine;
+using static EnemySpawner;
 
 public class EnemyStats : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyStats : MonoBehaviour
     public float currentHealth;
     [HideInInspector]
     public float currentDamage;
+    Transform player;
 
     private void Awake()
     {
@@ -19,8 +21,21 @@ public class EnemyStats : MonoBehaviour
         currentDamage = enemyData.Damage;
         currentHealth = enemyData.MaxHealth;
 
-        dropRateManager=GetComponent<DropRateManager>();
-        if (dropRateManager == null) Debug.LogError("ItemDropper не найден!", this);
+        dropRateManager = GetComponent<DropRateManager>();
+        if (dropRateManager == null) Debug.LogError("DropRateManager не найден!", this);
+    }
+
+    void Start()
+    {
+        player = FindFirstObjectByType<CurrentPlayerStats>().transform;
+    }
+
+    void Update()
+    {
+        if (Vector2.Distance(transform.position, player.position) >= enemyData.DespawnDistance)
+        {
+            ReturnEnemy();
+        }
     }
 
     public void TakeDamage(float damage)
@@ -32,6 +47,8 @@ public class EnemyStats : MonoBehaviour
             CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
             player.IncreaseExpirience(enemyData.ExpPerKill);
             dropRateManager.Die();
+            EnemySpawner enemySpawner = FindFirstObjectByType<EnemySpawner>();
+            enemySpawner.OnEnemyKilled();
         }
     }
 
@@ -42,5 +59,12 @@ public class EnemyStats : MonoBehaviour
             CurrentPlayerStats playerStats = collision.gameObject.GetComponent<CurrentPlayerStats>();
             playerStats.TakeDamage(currentDamage);
         }
+    }
+
+    void ReturnEnemy()
+    {
+        EnemySpawner enemySpawner = FindFirstObjectByType<EnemySpawner>();
+        Vector2 spawnOffset = Random.insideUnitCircle.normalized * enemyData.SpawnRadius;
+        transform.position = (Vector2)player.position + spawnOffset;
     }
 }

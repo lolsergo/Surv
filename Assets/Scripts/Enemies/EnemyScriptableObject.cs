@@ -18,4 +18,12 @@ public class EnemyScriptableObject : ScriptableObject
     [SerializeField]
     int expPerKill;
     public int ExpPerKill { get => expPerKill; private set => expPerKill = value; }
+
+    [SerializeField]
+    int spawnRadius;
+    public int SpawnRadius { get => spawnRadius; private set => spawnRadius = value; }
+
+    [SerializeField]
+    int despawnDistance;
+    public int DespawnDistance { get => despawnDistance; private set => despawnDistance = value; }
 }

@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7339c7b5162ed24990db7888afe5167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullSpeed: 300
+  pullSpeed: 10
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +789,7 @@ MonoBehaviour:
   currentMoveSpeed: 0
   currentMight: 0
   currentMagnetRadius: 0
+  spawnedWeapons: []
   experience: 0
   level: 1
   currentGold: 0
@@ -804,6 +805,65 @@ MonoBehaviour:
   - startingLevel: 6
     endingLevel: 12
     experienceCapIncrease: 300
+--- !u!1 &1925819007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1925819009}
+  - component: {fileID: 1925819008}
+  m_Layer: 0
+  m_Name: Enemy Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1925819008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925819007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a8d923158084448be7f4824fe6b27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - waveName: Wave 1
+    enemyGroups:
+    - enemyName: Bat
+      enemyCount: 5
+      spawnCount: 0
+      enemyPrefab: {fileID: 6112268221958819346, guid: 39bdedf68df14834d98422785ec09a72, type: 3}
+      enemyData: {fileID: 11400000, guid: 75e1b4b722e882848a0537dc421b77d8, type: 2}
+    waveQuota: 0
+    spawnInterval: 1
+    spawnCount: 0
+  currentWaveCount: 0
+  maxEnemiesAllowed: 4
+  isMaxEnemiesReached: 0
+  waveInterval: 3
+--- !u!4 &1925819009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925819007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026062198 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6253396956753081062, guid: c5ab7e8a6ed94114c8420ff939a67f85, type: 3}
@@ -1306,3 +1366,4 @@ SceneRoots:
   - {fileID: 3394015862800863430}
   - {fileID: 374511394}
   - {fileID: 4014996465374585401}
+  - {fileID: 1925819009}
