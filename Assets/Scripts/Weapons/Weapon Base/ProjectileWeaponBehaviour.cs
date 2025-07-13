@@ -1,30 +1,27 @@
 using UnityEngine;
 
-public class ProjectileWeaponBehaviour : MonoBehaviour
+public class ProjectileWeaponBehaviour : WeaponBehaviour
 {
-    public WeaponScriptableIObject weaponData;
-
     protected Vector3 direction;
-    public float destroyAfterSecons;
     public bool applyRotation = true;
     public float angleOffset = 0f;
 
-    protected float currentDamage;
+    [SerializeField]
     protected float currentProjectileSpeed;
-    protected float currentCooldownDuration;
+    [SerializeField]
     protected int currentPierce;
 
-    void Awake()
-    {
-        currentDamage = weaponData.Damage;
+    protected override void Awake()
+    {        
+        base.Awake();
+
         currentProjectileSpeed = weaponData.ProjectileSpeed;
-        currentPierce = weaponData.Pierce;
-        currentCooldownDuration = weaponData.CooldownDuration;
+        currentPierce = weaponData.Pierce;       
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
-        Destroy(gameObject, destroyAfterSecons);
+        base .Start();
 
         if (applyRotation && direction != Vector3.zero)
         {
@@ -45,22 +42,14 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collider)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Enemy"))
-        {
-            EnemyStats enemy = collider.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);
-            ReducePierce();
-        }
-        else if (collider.CompareTag("Prop"))
-        {
-            if (collider.TryGetComponent(out BreakableProps breakableProps))
-            {
-                breakableProps.TakeDamage(currentDamage);
-                ReducePierce();
-            }
-        }
+        base.OnTriggerEnter2D(collider);
+    }
+
+    protected override void AfterDamageApplied()
+    {
+        ReducePierce();
     }
 
     void ReducePierce()

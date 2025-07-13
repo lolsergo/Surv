@@ -12,7 +12,7 @@ public class WeaponController : MonoBehaviour
     protected virtual void Start()
     {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
-        currentCooldown =weaponData.CooldownDuration;
+        currentCooldown = weaponData.CooldownDuration;
     }
 
 

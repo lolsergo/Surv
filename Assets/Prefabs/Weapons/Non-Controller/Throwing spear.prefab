@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: c9ef46de6dcd8fd43a90131b4b191461, type: 2}
+  currentDamage: 30
+  currentCooldownDuration: 2
   destroyAfterSecons: 3
   applyRotation: 1
   angleOffset: -45

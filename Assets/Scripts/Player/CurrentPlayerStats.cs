@@ -7,18 +7,16 @@ public class CurrentPlayerStats : MonoBehaviour
 {
     CharacterScriptableObject characterData;
 
-
+    [ReadOnly]
     public float currentHealth;
-    [HideInInspector]
+    [ReadOnly]
     public float currentHealthRegen;
-    [HideInInspector]
+    [ReadOnly]
     public float currentMoveSpeed;
-    [HideInInspector]
+    [ReadOnly]
     public float currentMight;
-    [HideInInspector]
+    [ReadOnly]
     public float currentMagnetRadius;
-
-    public List<GameObject> spawnedWeapons;
 
     [Header("Experience/Level")]
     public int experience;
@@ -43,10 +41,15 @@ public class CurrentPlayerStats : MonoBehaviour
     bool isInvincibile;
 
     public List<LevelRange> levelRanges;
+
+    InventoryManager inventory;
+
     void Awake()
     {
         characterData = CharacterSelector.GetData();
         CharacterSelector.instance.DestroySingleton();
+
+        inventory = GetComponent<InventoryManager>();
 
         currentHealth = characterData.MaxHealth;
         currentHealthRegen = characterData.HealthRegen;
@@ -161,8 +164,15 @@ public class CurrentPlayerStats : MonoBehaviour
 
     public void SpawnWeapon(GameObject weapon)
     {
-        GameObject spawnedWeapon= Instantiate(weapon, transform.position, Quaternion.identity);
+        GameObject spawnedWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
         spawnedWeapon.transform.SetParent(transform);
-        spawnedWeapons.Add(spawnedWeapon);
+        inventory.AddWeapon(spawnedWeapon.GetComponent<WeaponController>(), 1);
+    }
+
+    public void ApplyPassive(GameObject passiveItem)
+    {
+        GameObject appliedPassive = Instantiate(passiveItem, transform.position, Quaternion.identity);
+        appliedPassive.transform.SetParent(transform);
+        inventory.AddPassive(appliedPassive.GetComponent<PassiveItem>(), 1);
     }
 }

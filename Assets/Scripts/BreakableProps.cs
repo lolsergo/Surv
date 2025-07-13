@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BreakableProps : MonoBehaviour
+public class BreakableProps : MonoBehaviour, IDamageable
 {
     private DropRateManager dropRateManager;
 

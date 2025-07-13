@@ -16,4 +16,4 @@ MonoBehaviour:
   damage: 5
   projectileSpeed: 10
   cooldownDuration: 2
-  pierce: 1
+  pierce: 5

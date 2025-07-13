@@ -1,7 +1,7 @@
 using UnityEngine;
 using static EnemySpawner;
 
-public class EnemyStats : MonoBehaviour
+public class EnemyStats : MonoBehaviour, IDamageable
 {
     public EnemyScriptableObject enemyData;
 

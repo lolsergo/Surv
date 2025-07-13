@@ -16,5 +16,5 @@ MonoBehaviour:
   maxHealth: 100
   healthRegen: 1
   moveSpeed: 5
-  might: 0
-  magnetRadius: 20
+  might: 1
+  magnetRadius: 1.6
