@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PentagramBehaviour : MeleeWeaponBehaviour
-{
+{ 
     List<GameObject> markedEnemies;
 
     protected override void Start()
@@ -13,12 +13,17 @@ public class PentagramBehaviour : MeleeWeaponBehaviour
         markedEnemies = new List<GameObject>();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Enemy") && !markedEnemies.Contains(collider.gameObject))
         {
             EnemyStats enemy = collider.GetComponent<EnemyStats>();
-            enemy.TakeDamage(currentDamage);
+            enemy.TakeDamage(CurrentDamage);
 
             markedEnemies.Add(collider.gameObject);
         }
@@ -26,7 +31,7 @@ public class PentagramBehaviour : MeleeWeaponBehaviour
         {
             if (collider.TryGetComponent(out BreakableProps breakableProps) && !markedEnemies.Contains(collider.gameObject))
             {
-                breakableProps.TakeDamage(currentDamage);
+                breakableProps.TakeDamage(CurrentDamage);
 
                 markedEnemies.Add(collider.gameObject);
             }

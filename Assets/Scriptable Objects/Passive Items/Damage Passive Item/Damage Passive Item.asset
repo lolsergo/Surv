@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Damage Passive Item
   m_EditorClassIdentifier: 
   multipler: 50
+  _upgradableItemLevel: 1
+  _nextLevelPrefab: {fileID: 6239829550182783356, guid: eda12d30f41cf27418e3baba1954dd16, type: 3}

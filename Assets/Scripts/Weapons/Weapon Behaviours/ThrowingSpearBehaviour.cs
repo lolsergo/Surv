@@ -7,6 +7,11 @@ public class ThrowingSpearBehaviour : ProjectileWeaponBehaviour
         base.Start();
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     void Update()
     {
         transform.position += direction * currentProjectileSpeed * Time.deltaTime;

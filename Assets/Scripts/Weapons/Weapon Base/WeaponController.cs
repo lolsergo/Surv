@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class WeaponController : MonoBehaviour
+public class WeaponController : MonoBehaviour, IInventoryItem
 {
-    [Header("Weapon stats")]
-    public WeaponScriptableIObject weaponData;
+    [HideInInspector]
+    public WeaponScriptableObject weaponData;
+    public int ItemLevel { get => weaponData.UpgradableItemLevel; }
+    public GameObject NextLevelPrefab { get => weaponData.NextLevelPrefab; }
     float currentCooldown;
 
 
@@ -14,7 +16,6 @@ public class WeaponController : MonoBehaviour
         playerMovement = FindFirstObjectByType<PlayerMovement>();
         currentCooldown = weaponData.CooldownDuration;
     }
-
 
     protected virtual void Update()
     {

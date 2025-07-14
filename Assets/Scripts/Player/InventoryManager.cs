@@ -1,34 +1,53 @@
 using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField]
-    private SerializedDictionary<WeaponController, int> weapons;
+    public SerializedDictionary<WeaponController, int> weapons;
 
     [SerializeField]
     private SerializedDictionary<PassiveItem, int> passives;
 
-    public void AddWeapon(WeaponController weapon, int level)
+    public void AddItem(IInventoryItem item)
     {
-        weapons.Add(weapon, level);
+        switch (item)
+        {
+            case WeaponController weapon:
+                weapons.Add(weapon, weapon.ItemLevel);
+                break;
+            case PassiveItem passive:
+                passives.Add(passive, passive.ItemLevel);
+                break;
+            default:
+                throw new ArgumentException("Неизвестный тип предмета");
+        }
     }
 
-    public void AddPassive(PassiveItem passive, int level)
+    public void LevelUpItem<T>(T item, SerializedDictionary<T, int> dictionary, Func<T, GameObject> getNextLevelPrefab)
+        where T : MonoBehaviour, IInventoryItem
     {
-        passives.Add(passive, level);
-    }
+        if (dictionary.ContainsKey(item))
+        {
+            // Создаем улучшенную версию
+            GameObject upgradedItem = Instantiate(
+                getNextLevelPrefab(item),
+                item.transform.position,
+                item.transform.rotation
+            );
 
-    public void LevelUpWeapon(WeaponController weapon)
-    {
+            T newItem = upgradedItem.GetComponent<T>();
 
-    }
+            // Удаляем старое, добавляем новое
+            dictionary.Remove(item);
+            Destroy(item.gameObject);
 
-    public void LevelUpPassive(PassiveItem passiveItem)
-    {
-
+            dictionary.Add(newItem, newItem.ItemLevel);
+            upgradedItem.transform.SetParent(transform);
+        }
     }
 }

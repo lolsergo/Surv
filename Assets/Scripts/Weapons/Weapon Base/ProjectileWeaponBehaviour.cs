@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ProjectileWeaponBehaviour : WeaponBehaviour
 {
+    public RangedWeaponScriptableObject rangedWeaponData;
+
     protected Vector3 direction;
     public bool applyRotation = true;
     public float angleOffset = 0f;
@@ -12,16 +14,17 @@ public class ProjectileWeaponBehaviour : WeaponBehaviour
     protected int currentPierce;
 
     protected override void Awake()
-    {        
+    {
+        weaponData = rangedWeaponData;
         base.Awake();
 
-        currentProjectileSpeed = weaponData.ProjectileSpeed;
-        currentPierce = weaponData.Pierce;       
+        currentProjectileSpeed = rangedWeaponData.ProjectileSpeed;
+        currentPierce = rangedWeaponData.Pierce;
     }
 
     protected override void Start()
     {
-        base .Start();
+        base.Start();
 
         if (applyRotation && direction != Vector3.zero)
         {
@@ -52,7 +55,7 @@ public class ProjectileWeaponBehaviour : WeaponBehaviour
         ReducePierce();
     }
 
-    void ReducePierce()
+    private void ReducePierce()
     {
         currentPierce--;
 

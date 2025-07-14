@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dea6483314ccbc4aa61b66e8feaad52, type: 3}
   m_Name: Magnet Passive Item
   m_EditorClassIdentifier: 
-  multipler: 1000
+  multipler: 200
+  _upgradableItemLevel: 1
+  _nextLevelPrefab: {fileID: 8344325305862590841, guid: 7894d84ebde310b42ac7f12e76d7f359, type: 3}

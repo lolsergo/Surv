@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class PentagramController : WeaponController
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    private MeeleWeaponScriptableObject meleeWeaponData;
+
     protected override void Start()
     {
         base.Start();
+        weaponData = meleeWeaponData;
     }
 
-    // Update is called once per frame
     protected override void Attack()
     {
         base.Attack();
-        GameObject spawnedPentagram = Instantiate(weaponData.Prefab);
+        GameObject spawnedPentagram = Instantiate(meleeWeaponData.Prefab);
         spawnedPentagram.transform.position = transform.position;
         spawnedPentagram.transform.parent = transform;
     }

@@ -102,12 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4843ed954abd730469f891dbc15e0c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: c9ef46de6dcd8fd43a90131b4b191461, type: 2}
+  weaponData: {fileID: 0}
   currentDamage: 30
   currentCooldownDuration: 2
   destroyAfterSecons: 3
+  rangedWeaponData: {fileID: 11400000, guid: 0cab3d67b26f51549b9b41267cff2808, type: 2}
   applyRotation: 1
   angleOffset: -45
+  currentProjectileSpeed: 0
+  currentPierce: 0
 --- !u!60 &4828150461974127049
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class WeaponBehaviour : MonoBehaviour
 {
-    public WeaponScriptableIObject weaponData;
+    [HideInInspector]
+    public WeaponScriptableObject weaponData;
 
-    [SerializeField]
-    protected float currentDamage;
+    protected float BaseDamage => weaponData.Damage;
+    protected float CurrentDamage { get; private set; }
+
     [SerializeField]
     protected float currentCooldownDuration;
     [SerializeField]
@@ -20,7 +22,7 @@ public class WeaponBehaviour : MonoBehaviour
     protected virtual void Awake()
     {
         CurrentPlayerStats currentPlayerStats = FindFirstObjectByType<CurrentPlayerStats>();
-        currentDamage = weaponData.Damage * currentPlayerStats.currentMight;
+        CurrentDamage = weaponData.Damage * currentPlayerStats.currentMight;
         currentCooldownDuration = weaponData.CooldownDuration;
     }
 
@@ -41,7 +43,7 @@ public class WeaponBehaviour : MonoBehaviour
 
     protected virtual void ApplyDamage(IDamageable target)
     {
-        target.TakeDamage(currentDamage);
+        target.TakeDamage(CurrentDamage);
         AfterDamageApplied();
     }
 

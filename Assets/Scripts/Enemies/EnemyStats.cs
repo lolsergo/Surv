@@ -56,14 +56,13 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            CurrentPlayerStats playerStats = collision.gameObject.GetComponent<CurrentPlayerStats>();
-            playerStats.TakeDamage(currentDamage);
+            CurrentPlayerStats player = collision.gameObject.GetComponent<CurrentPlayerStats>();
+            player.TakeDamage(currentDamage);
         }
     }
 
     void ReturnEnemy()
-    {
-        EnemySpawner enemySpawner = FindFirstObjectByType<EnemySpawner>();
+    {      
         Vector2 spawnOffset = Random.insideUnitCircle.normalized * enemyData.SpawnRadius;
         transform.position = (Vector2)player.position + spawnOffset;
     }

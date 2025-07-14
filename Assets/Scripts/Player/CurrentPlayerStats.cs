@@ -166,13 +166,15 @@ public class CurrentPlayerStats : MonoBehaviour
     {
         GameObject spawnedWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
         spawnedWeapon.transform.SetParent(transform);
-        inventory.AddWeapon(spawnedWeapon.GetComponent<WeaponController>(), 1);
+        IInventoryItem upgradableItem = spawnedWeapon.GetComponent<IInventoryItem>();
+        inventory.AddItem(upgradableItem);
     }
 
     public void ApplyPassive(GameObject passiveItem)
     {
         GameObject appliedPassive = Instantiate(passiveItem, transform.position, Quaternion.identity);
         appliedPassive.transform.SetParent(transform);
-        inventory.AddPassive(appliedPassive.GetComponent<PassiveItem>(), 1);
+        IInventoryItem upgradableItem = appliedPassive.GetComponent<IInventoryItem>();
+        inventory.AddItem(upgradableItem);
     }
 }

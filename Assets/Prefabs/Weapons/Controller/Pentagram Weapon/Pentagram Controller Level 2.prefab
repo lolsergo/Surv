@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2780218485167906684}
   - component: {fileID: 8069003436969614171}
   m_Layer: 6
-  m_Name: Pentagram Controller
+  m_Name: Pentagram Controller Level 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc7cc17cb202a14990baafd82c0cac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: e534151a5404b734d89aa770795d0239, type: 2}
+  weaponData: {fileID: 11400000, guid: 8b27c1dd113bb654caab8c0764a8f7cc, type: 2}
+  meleeWeaponData: {fileID: 11400000, guid: ea45e3950073e6f41a9e90379a8caa85, type: 2}

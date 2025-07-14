@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class MeleeWeaponBehaviour : WeaponBehaviour
 {
+    public MeeleWeaponScriptableObject meleeWeaponData;
+
     protected override void Awake()
     {
+        weaponData = meleeWeaponData;
         base.Awake();
     }
 

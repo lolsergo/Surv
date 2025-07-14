@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe389c5623baa8a47a97ec6e4ed1a8c9, type: 3}
-  m_Name: Throwing Spear Weapon
+  m_Script: {fileID: 11500000, guid: 7dea6483314ccbc4aa61b66e8feaad52, type: 3}
+  m_Name: Damage Passive Item Level 2
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7511558812685879183, guid: bbad4ce2135f3c34185db98a29a34c50, type: 3}
-  damage: 5
-  projectileSpeed: 10
-  cooldownDuration: 2
-  pierce: 5
+  multipler: 75
+  _upgradableItemLevel: 2
+  _nextLevelPrefab: {fileID: 0}
