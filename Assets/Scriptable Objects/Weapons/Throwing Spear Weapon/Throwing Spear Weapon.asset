@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23deb46ce68bcff49b056f0995c7eae5, type: 3}
   m_Name: Throwing Spear Weapon
   m_EditorClassIdentifier: 
+  _weaponName: Throwing Spear
   _prefab: {fileID: 7511558812685879183, guid: bbad4ce2135f3c34185db98a29a34c50, type: 3}
   _damage: 10
   _cooldownDuration: 3

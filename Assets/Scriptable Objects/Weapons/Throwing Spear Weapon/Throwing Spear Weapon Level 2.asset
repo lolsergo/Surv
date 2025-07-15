@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23deb46ce68bcff49b056f0995c7eae5, type: 3}
   m_Name: Throwing Spear Weapon Level 2
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 7511558812685879183, guid: bbad4ce2135f3c34185db98a29a34c50, type: 3}
-  _damage: 10
-  _cooldownDuration: 2.5
+  _weaponName: Throwing Spear
+  _prefab: {fileID: 7511558812685879183, guid: ee4cab7f7f5f1a046970edd39a8a7e15, type: 3}
+  _damage: 15
+  _cooldownDuration: 3
   _upgradableItemLevel: 2
   _nextLevelPrefab: {fileID: 0}
   _projectileSpeed: 10

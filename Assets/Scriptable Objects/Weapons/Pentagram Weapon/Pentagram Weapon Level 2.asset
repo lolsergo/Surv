@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5973b0d76941f2b4b9325884d9f6b9f7, type: 3}
   m_Name: Pentagram Weapon Level 2
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 1807295204169746668, guid: 2d21127f787ae384db98fe05628ca149, type: 3}
+  _weaponName: Pentagram
+  _prefab: {fileID: 1807295204169746668, guid: 4cb326a1e3f4ce141b42a7c281257105, type: 3}
   _damage: 5
-  _cooldownDuration: 3
+  _cooldownDuration: 2.5
   _upgradableItemLevel: 2
   _nextLevelPrefab: {fileID: 0}

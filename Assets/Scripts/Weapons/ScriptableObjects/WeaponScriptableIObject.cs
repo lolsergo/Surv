@@ -1,7 +1,11 @@
 using UnityEngine;
 
-public class WeaponScriptableObject : ScriptableObject
+public abstract class WeaponScriptableObject : ScriptableObject
 {
+    [SerializeField]
+    private string _weaponName;
+    public string WeaponName { get => _weaponName; private set => _weaponName = value; }
+
     [SerializeField]
     private GameObject _prefab;
     public GameObject Prefab { get => _prefab; private set => _prefab = value; }

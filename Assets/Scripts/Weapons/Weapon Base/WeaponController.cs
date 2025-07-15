@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour, IInventoryItem
 {
-    [HideInInspector]
+    [SerializeReference]
     public WeaponScriptableObject weaponData;
     public int ItemLevel { get => weaponData.UpgradableItemLevel; }
     public GameObject NextLevelPrefab { get => weaponData.NextLevelPrefab; }
-    float currentCooldown;
+    public string ItemName { get => weaponData.WeaponName; }
 
+    float currentCooldown;
 
     protected PlayerMovement playerMovement;
 
