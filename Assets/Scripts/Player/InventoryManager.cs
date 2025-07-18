@@ -4,30 +4,54 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class InventoryManager : MonoBehaviour
 {
-    public WeaponScriptableObject expectedWeaponData;
-
     [SerializeField]
     public SerializedDictionary<WeaponController, int> weapons;
+    [SerializeField]
+    public SerializedDictionary<Image, string> weaponSlots = new();
 
     [SerializeField]
-    private SerializedDictionary<PassiveItem, int> passives;
+    public SerializedDictionary<PassiveItem, int> passives;
+    [SerializeField]
+    public SerializedDictionary<Image, string> passiveSlots = new();
 
     public void AddItem(IInventoryItem item)
     {
         switch (item)
         {
             case WeaponController weapon:
-                weapons.Add(weapon, weapon.weaponData.UpgradableItemLevel);
+                weapons.Add(weapon, (weapon.weaponData.UpgradableItemLevel));
+                AddImage(weapon.weaponData.WeaponName, weapon.weaponData.Icon, weaponSlots);
                 break;
             case PassiveItem passive:
-                passives.Add(passive, passive.passiveItemData.UpgradableItemLevel);
+                passives.Add(passive, (passive.passiveItemData.UpgradableItemLevel));
+                AddImage(passive.passiveItemData.PassiveItemName, passive.passiveItemData.Icon, passiveSlots);
                 break;
             default:
                 throw new ArgumentException("Неизвестный тип предмета");
+        }
+    }
+
+    public void AddImage(string itemName, Sprite itemSprite, SerializedDictionary<Image, string> dictionary)
+    {
+        if (dictionary.ContainsValue(itemName))
+        {
+            return;
+        }
+
+        foreach (var slot in dictionary.Keys.ToList())
+        {
+            if (string.IsNullOrEmpty(dictionary[slot]))
+            {
+                dictionary[slot] = itemName;
+                slot.sprite = itemSprite;
+                slot.enabled = true;
+                return;
+            }
         }
     }
 
@@ -94,6 +118,12 @@ public class InventoryManager : MonoBehaviour
 
     public void LevelUpPassive(PassiveItem passive)
     {
+        if (passive == null)
+        {
+            Debug.LogError("Weapon is null!");
+            return;
+        }
+
         LevelUpItem(passive, passives, p => p.passiveItemData.NextLevelPrefab);
     }
 }

@@ -25,4 +25,8 @@ public abstract class WeaponScriptableObject : ScriptableObject
     [SerializeField]
     private GameObject _nextLevelPrefab;
     public GameObject NextLevelPrefab { get => _nextLevelPrefab; private set => _nextLevelPrefab = value; }
+
+    [SerializeField]
+    Sprite _icon;
+    public Sprite Icon { get => _icon; private set => _icon = value; }
 }

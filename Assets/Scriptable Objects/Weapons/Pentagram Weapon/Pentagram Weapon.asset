@@ -18,3 +18,4 @@ MonoBehaviour:
   _cooldownDuration: 3
   _upgradableItemLevel: 1
   _nextLevelPrefab: {fileID: 1027097230485392838, guid: c26fc66ec92072f44887e0e5b12145bb, type: 3}
+  _icon: {fileID: 21300000, guid: ce97ed6319c02994eb03c52ea1a0b418, type: 2}

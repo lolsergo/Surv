@@ -8,6 +8,10 @@ public class CharacterScriptableObject : ScriptableObject
     public GameObject BaseWeapon { get => baseWeapon; private set => baseWeapon = value; }
 
     [SerializeField]
+    GameObject _basePassiveItem;
+    public GameObject BasePassiveItem { get => _basePassiveItem; private set => _basePassiveItem = value; }
+
+    [SerializeField]
     float maxHealth;
     public float MaxHealth { get => maxHealth; private set => maxHealth = value; }
 

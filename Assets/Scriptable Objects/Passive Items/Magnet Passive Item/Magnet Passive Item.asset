@@ -15,3 +15,5 @@ MonoBehaviour:
   multipler: 200
   _upgradableItemLevel: 1
   _nextLevelPrefab: {fileID: 8344325305862590841, guid: 7894d84ebde310b42ac7f12e76d7f359, type: 3}
+  _passiveItemName: Magnet
+  _icon: {fileID: 21300000, guid: cac64af6ae28c5d42b087443482b286d, type: 2}

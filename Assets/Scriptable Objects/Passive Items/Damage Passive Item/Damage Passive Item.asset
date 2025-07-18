@@ -15,3 +15,5 @@ MonoBehaviour:
   multipler: 50
   _upgradableItemLevel: 1
   _nextLevelPrefab: {fileID: 6239829550182783356, guid: eda12d30f41cf27418e3baba1954dd16, type: 3}
+  _passiveItemName: Might
+  _icon: {fileID: 21300000, guid: 66bc5ae9e25a1324780c8b51fd5d407e, type: 2}

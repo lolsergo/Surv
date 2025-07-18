@@ -18,4 +18,8 @@ public class PassiveItemScriptableObject : ScriptableObject
     [SerializeField]
     private string _passiveItemName;
     public string PassiveItemName { get => _passiveItemName; private set => _passiveItemName = value; }
+
+    [SerializeField]
+    Sprite _icon;
+    public Sprite Icon { get => _icon; private set => _icon = value; }
 }

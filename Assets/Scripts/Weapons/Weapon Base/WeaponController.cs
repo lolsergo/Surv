@@ -4,6 +4,7 @@ public class WeaponController : MonoBehaviour, IInventoryItem
 {
     [SerializeReference]
     public WeaponScriptableObject weaponData;
+   
     public int ItemLevel { get => weaponData.UpgradableItemLevel; }
     public GameObject NextLevelPrefab { get => weaponData.NextLevelPrefab; }
     public string ItemName { get => weaponData.WeaponName; }

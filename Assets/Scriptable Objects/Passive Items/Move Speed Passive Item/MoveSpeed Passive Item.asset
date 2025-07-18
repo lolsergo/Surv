@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dea6483314ccbc4aa61b66e8feaad52, type: 3}
-  m_Name: MoveSpeed Passive Item Level 2
+  m_Name: MoveSpeed Passive Item
   m_EditorClassIdentifier: 
-  multipler: 75
-  _upgradableItemLevel: 2
-  _nextLevelPrefab: {fileID: 0}
+  multipler: 50
+  _upgradableItemLevel: 1
+  _nextLevelPrefab: {fileID: 70052084586872384, guid: 3d753c2e59830144990069737ea4a7c9, type: 3}
+  _passiveItemName: Boots of Speed
+  _icon: {fileID: 21300000, guid: 3bb268cc26776894d871e247afe37ce9, type: 2}
