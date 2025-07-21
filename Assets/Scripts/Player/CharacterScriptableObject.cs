@@ -1,33 +1,42 @@
+using TMPro;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CharacterScriptableObject", menuName = "ScriptableObjects/Character")]
 public class CharacterScriptableObject : ScriptableObject
 {
     [SerializeField]
-    GameObject baseWeapon;
-    public GameObject BaseWeapon { get => baseWeapon; private set => baseWeapon = value; }
+    private Sprite _icon;
+    public Sprite Icon { get => _icon; private set => _icon = value; }
+
+    [SerializeField]
+    private string _characterName;
+    public string CharacterName { get => _characterName; private set => _characterName = value; }
+
+    [SerializeField]
+    GameObject _baseWeapon;
+    public GameObject BaseWeapon { get => _baseWeapon; private set => _baseWeapon = value; }
 
     [SerializeField]
     GameObject _basePassiveItem;
     public GameObject BasePassiveItem { get => _basePassiveItem; private set => _basePassiveItem = value; }
 
     [SerializeField]
-    float maxHealth;
-    public float MaxHealth { get => maxHealth; private set => maxHealth = value; }
+    float _maxHealth;
+    public float MaxHealth { get => _maxHealth; private set => _maxHealth = value; }
 
     [SerializeField]
-    float healthRegen;
-    public float HealthRegen { get => healthRegen; private set => healthRegen = value; }
+    float _healthRegen;
+    public float HealthRegen { get => _healthRegen; private set => _healthRegen = value; }
 
     [SerializeField]
-    float moveSpeed;
-    public float MoveSpeed { get => moveSpeed; private set => moveSpeed = value; }
+    float _moveSpeed;
+    public float MoveSpeed { get => _moveSpeed; private set => _moveSpeed = value; }
 
     [SerializeField]
-    float might;
-    public float Might { get => might; private set => might = value; }
+    float _might;
+    public float Might { get => _might; private set => _might = value; }
 
     [SerializeField]
-    float magnetRadius;
-    public float MagnetRadius { get => magnetRadius; private set => magnetRadius = value; }
+    float _magnetRadius;
+    public float MagnetRadius { get => _magnetRadius; private set => _magnetRadius = value; }
 }

@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class PlayerCollector : MonoBehaviour
 {
-    CurrentPlayerStats playerStats;
+    PlayerController playerStats;
     CircleCollider2D magnetCollector;
     
     public float pullSpeed;
 
     void Start()
     {
-        playerStats = FindFirstObjectByType<CurrentPlayerStats>();
+        playerStats = FindFirstObjectByType<PlayerController>();
         magnetCollector = GetComponent<CircleCollider2D>();
     }
 
     void Update()
     {
-        magnetCollector.radius = playerStats.currentMagnetRadius;
+        magnetCollector.radius = playerStats.CurrentMagnetRadius.Value;
     }
 
     void OnTriggerEnter2D(Collider2D collider)

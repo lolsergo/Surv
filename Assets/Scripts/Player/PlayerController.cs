@@ -3,27 +3,22 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class CurrentPlayerStats : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     CharacterScriptableObject characterData;
 
-    [ReadOnly]
-    public float currentHealth;
-    [ReadOnly]
-    public float currentHealthRegen;
-    [ReadOnly]
-    public float currentMoveSpeed;
-    [ReadOnly]
-    public float currentMight;
-    [ReadOnly]
-    public float currentMagnetRadius;
+    public PlayerHealth CurrentHealth = new();
+    public PlayerHealthRegen CurrentHealthRegen = new();
+    public MoveSpeed CurrentMoveSpeed = new();
+    public PlayerMight CurrentMight = new();
+    public PlayerMagnet CurrentMagnetRadius = new();
+    public PlayerGold CurrentGold = new();
+    [SerializeField]
+    private int baseGold;
 
     [Header("Experience/Level")]
     public int experience;
-    public int level;
-
-    public int currentGold;
-
+    private int level;
     [HideInInspector]
     public int experienceCap;
 
@@ -37,8 +32,8 @@ public class CurrentPlayerStats : MonoBehaviour
 
     [Header("I-Frames")]
     public float invincibilityDuration;
-    float invincibilityTimer;
-    bool isInvincibile;
+    private float invincibilityTimer;
+    private bool isInvincible;
 
     public List<LevelRange> levelRanges;
 
@@ -51,11 +46,13 @@ public class CurrentPlayerStats : MonoBehaviour
 
         inventory = GetComponent<InventoryManager>();
 
-        currentHealth = characterData.MaxHealth;
-        currentHealthRegen = characterData.HealthRegen;
-        currentMight = characterData.Might;
-        currentMoveSpeed = characterData.MoveSpeed;
-        currentMagnetRadius = characterData.MagnetRadius;
+        CurrentHealth.Initialize(characterData.MaxHealth);
+        CurrentHealthRegen.Value = characterData.HealthRegen;
+        CurrentMight.Value = characterData.Might;
+        CurrentMoveSpeed.Value = characterData.MoveSpeed;
+        CurrentMagnetRadius.Value = characterData.MagnetRadius;
+        CurrentGold.Value = baseGold;
+        CurrentGold.ForceUpdateUI();
 
         SpawnWeapon(characterData.BaseWeapon);
     }
@@ -63,41 +60,31 @@ public class CurrentPlayerStats : MonoBehaviour
     void Start()
     {
         experienceCap = levelRanges[0].experienceCapIncrease;
+
+        CurrentHealth.OnDamaged += damage => StartInvincibility();
+        CurrentHealth.OnDeath += Kill;
+
+        GameManager.instance.AssignChosenCharacterUI(characterData);
     }
 
     private void Update()
     {
-        if (invincibilityTimer > 0)
+        if (isInvincible)
         {
             invincibilityTimer -= Time.deltaTime;
-        }
-        else if (isInvincibile)
-        {
-            isInvincibile = false;
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+            }
         }
 
-        Recover();
+        CurrentHealth.Regeneration(CurrentHealthRegen.Value);
     }
 
     public void IncreaseExpirience(int amount)
     {
         experience += amount;
         LevelUpChecker();
-    }
-
-    public void IncreaseGold(int amount)
-    {
-        currentGold += amount;
-    }
-
-    public void RestoreHealth(int amount)
-    {
-        currentHealth += amount;
-
-        if (currentHealth > characterData.MaxHealth)
-        {
-            currentHealth = characterData.MaxHealth;
-        }
     }
 
     void LevelUpChecker()
@@ -123,42 +110,25 @@ public class CurrentPlayerStats : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void ApplyDamage(float damage)
     {
-        if (!isInvincibile)
+        if (!isInvincible)
         {
-            currentHealth -= damage;
-
-            invincibilityTimer = invincibilityDuration;
-            isInvincibile = true;
-
-            if (currentHealth <= 0)
-            {
-                Kill();
-            }
+            CurrentHealth.TryTakeDamage(damage);
         }
+    }
+
+    private void StartInvincibility()
+    {
+        isInvincible = true;
+        invincibilityTimer = invincibilityDuration;
     }
 
     public void Kill()
     {
-        Debug.Log("YOU DIED");
-    }
-
-    public bool IsHealthFull()
-    {
-        return currentHealth == characterData.MaxHealth;
-    }
-
-    void Recover()
-    {
-        if (currentHealth < characterData.MaxHealth)
+        if (!GameManager.instance.isGameOver)
         {
-            currentHealth += currentHealthRegen * Time.deltaTime;
-
-            if (currentHealth > characterData.MaxHealth)
-            {
-                currentHealth = characterData.MaxHealth;
-            }
+            GameManager.instance.GameOver();
         }
     }
 

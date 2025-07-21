@@ -4,8 +4,7 @@ using static EnemySpawner;
 public class EnemyStats : MonoBehaviour, IDamageable
 {
     public EnemyScriptableObject enemyData;
-
-    private DropRateManager dropRateManager;
+    private DropRateManager _dropRateManager;
 
     [HideInInspector]
     public float currentMoveSpeed;
@@ -21,13 +20,13 @@ public class EnemyStats : MonoBehaviour, IDamageable
         currentDamage = enemyData.Damage;
         currentHealth = enemyData.MaxHealth;
 
-        dropRateManager = GetComponent<DropRateManager>();
-        if (dropRateManager == null) Debug.LogError("DropRateManager не найден!", this);
+        _dropRateManager = GetComponent<DropRateManager>();
+        if (_dropRateManager == null) Debug.LogError("DropRateManager не найден!", this);
     }
 
     void Start()
     {
-        player = FindFirstObjectByType<CurrentPlayerStats>().transform;
+        player = FindFirstObjectByType<PlayerController>().transform;
     }
 
     void Update()
@@ -44,20 +43,27 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0)
         {
-            CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
-            player.IncreaseExpirience(enemyData.ExpPerKill);
-            dropRateManager.Die();
-            EnemySpawner enemySpawner = FindFirstObjectByType<EnemySpawner>();
-            enemySpawner.OnEnemyKilled();
+            EnemyDie();
         }
+    }
+
+    private void EnemyDie()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        player.IncreaseExpirience(enemyData.ExpPerKill);
+        _dropRateManager.Die();
+        EnemySpawner enemySpawner = FindFirstObjectByType<EnemySpawner>();
+        enemySpawner.OnEnemyKilled();
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            CurrentPlayerStats player = collision.gameObject.GetComponent<CurrentPlayerStats>();
-            player.TakeDamage(currentDamage);
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.ApplyDamage(currentDamage);
         }
     }
 

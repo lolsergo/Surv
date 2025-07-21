@@ -12,7 +12,7 @@ public class GoldCoin : PickUps, ICollectible
 
     public void Collect()
     {
-        CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
-        player.IncreaseGold(goldGranted);
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        player.CurrentGold.IncreaseGold(goldGranted);
     }
 }

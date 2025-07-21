@@ -6,10 +6,7 @@ public class HealthPotion : PickUps, ICollectible
 
     public void Collect()
     {
-        CurrentPlayerStats player = FindFirstObjectByType<CurrentPlayerStats>();
-        if (!player.IsHealthFull())
-        {
-            player.RestoreHealth(healthGranted);
-        }
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        player.CurrentHealth.Heal(healthGranted);
     }
 }

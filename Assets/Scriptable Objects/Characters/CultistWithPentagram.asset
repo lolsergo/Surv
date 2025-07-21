@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba70dc9c9c65b243945a710cf73b044, type: 3}
   m_Name: CultistWithPentagram
   m_EditorClassIdentifier: 
-  baseWeapon: {fileID: 1027097230485392838, guid: c9219220a542c3142ae65f7a650d78e7, type: 3}
-  maxHealth: 100
-  healthRegen: 1
-  moveSpeed: 5
-  might: 1
-  magnetRadius: 1.6
+  _icon: {fileID: 2300117548131575876, guid: 64979580888fabc42947f00b87e81e86, type: 3}
+  _characterName: Cultist
+  _baseWeapon: {fileID: 1027097230485392838, guid: c9219220a542c3142ae65f7a650d78e7, type: 3}
+  _basePassiveItem: {fileID: 0}
+  _maxHealth: 100
+  _healthRegen: 1
+  _moveSpeed: 5
+  _might: 1
+  _magnetRadius: 2

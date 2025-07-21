@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PassiveItem : MonoBehaviour,IInventoryItem
 {
-    protected CurrentPlayerStats currentPlayerStats;
+    protected PlayerController currentPlayerStats;
     public PassiveItemScriptableObject passiveItemData;
     public int ItemLevel { get => passiveItemData.UpgradableItemLevel; }
     public GameObject NextLevelPrefab { get => passiveItemData.NextLevelPrefab; }
@@ -15,7 +15,7 @@ public class PassiveItem : MonoBehaviour,IInventoryItem
 
     void Start()
     {
-        currentPlayerStats = FindFirstObjectByType<CurrentPlayerStats>();
+        currentPlayerStats = FindFirstObjectByType<PlayerController>();
         ApplyModifier();
     }
 }

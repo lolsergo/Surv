@@ -21,8 +21,8 @@ public class WeaponBehaviour : MonoBehaviour
 
     protected virtual void Awake()
     {
-        CurrentPlayerStats currentPlayerStats = FindFirstObjectByType<CurrentPlayerStats>();
-        CurrentDamage = weaponData.Damage * currentPlayerStats.currentMight;
+        PlayerController currentPlayerStats = FindFirstObjectByType<PlayerController>();
+        CurrentDamage = weaponData.Damage * currentPlayerStats.CurrentMight.Value;
         currentCooldownDuration = weaponData.CooldownDuration;
     }
 

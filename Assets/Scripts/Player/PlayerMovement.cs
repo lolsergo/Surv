@@ -12,11 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 lastMovedVector;
 
     Rigidbody2D rigidBody;
-    CurrentPlayerStats currentPlayerStats;
+    PlayerController currentPlayerStats;
 
     void Start()
     {
-        currentPlayerStats=GetComponent<CurrentPlayerStats>();
+        currentPlayerStats=GetComponent<PlayerController>();
         rigidBody = GetComponent<Rigidbody2D>();
         lastMovedVector = new Vector2(1, 0f);
     }
@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     void InputManagment()
     {
+        if (GameManager.instance.isGameOver)
+        {
+            return;
+        }
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
@@ -57,7 +61,11 @@ public class PlayerMovement : MonoBehaviour
     }
     void Move()
     {
-        rigidBody.linearVelocity = new Vector2(moveDirection.x * currentPlayerStats.currentMoveSpeed, moveDirection.y * currentPlayerStats.currentMoveSpeed);
+        if (GameManager.instance.isGameOver)
+        {
+            return;
+        }
+        rigidBody.linearVelocity = new Vector2(moveDirection.x * currentPlayerStats.CurrentMoveSpeed.Value, moveDirection.y * currentPlayerStats.CurrentMoveSpeed.Value);
     }
 
 }
