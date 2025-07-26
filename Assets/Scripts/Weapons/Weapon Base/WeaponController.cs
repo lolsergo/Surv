@@ -1,17 +1,22 @@
+using System.Linq;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour, IInventoryItem
 {
     [SerializeReference]
     public WeaponScriptableObject weaponData;
-   
+
     public int ItemLevel { get => weaponData.UpgradableItemLevel; }
     public GameObject NextLevelPrefab { get => weaponData.NextLevelPrefab; }
-    public string ItemName { get => weaponData.WeaponName; }
+    public string ItemName { get => weaponData.ItemName; }
+    public string ItemDescription {  get => weaponData.ItemDescription; }
+    public Sprite Icon { get => weaponData.Icon; }
 
     float currentCooldown;
 
     protected PlayerMovement playerMovement;
+
+    //public GameObject GetGameObject() => this.gameObject;
 
     protected virtual void Start()
     {
@@ -31,5 +36,12 @@ public class WeaponController : MonoBehaviour, IInventoryItem
     protected virtual void Attack()
     {
         currentCooldown = weaponData.CooldownDuration;
+    }
+
+    public void UpgradeInInventory(InventoryManager inventory)
+    {
+        inventory.LevelUpItem(this,
+                            inventory.weapons,
+                            w => w.weaponData.NextLevelPrefab);
     }
 }

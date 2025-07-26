@@ -9,6 +9,21 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Если нужно сохранять между сценами
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     [SerializeField]
     public SerializedDictionary<WeaponController, int> weapons;
     [SerializeField]
@@ -25,14 +40,19 @@ public class InventoryManager : MonoBehaviour
         {
             case WeaponController weapon:
                 weapons.Add(weapon, (weapon.weaponData.UpgradableItemLevel));
-                AddImage(weapon.weaponData.WeaponName, weapon.weaponData.Icon, weaponSlots);
+                AddImage(weapon.weaponData.ItemName, weapon.weaponData.Icon, weaponSlots);
                 break;
             case PassiveItem passive:
                 passives.Add(passive, (passive.passiveItemData.UpgradableItemLevel));
-                AddImage(passive.passiveItemData.PassiveItemName, passive.passiveItemData.Icon, passiveSlots);
+                AddImage(passive.passiveItemData.ItemName, passive.passiveItemData.Icon, passiveSlots);
                 break;
             default:
                 throw new ArgumentException("Неизвестный тип предмета");
+        }
+
+        if (GameManager.instance != null && GameManager.instance.isChoosingUpgrades)
+        {
+            GameManager.instance.EndLevelUp();
         }
     }
 
@@ -102,6 +122,11 @@ public class InventoryManager : MonoBehaviour
             Debug.LogError($"Item {key.name} not found in dictionary!");
             return;
         }
+
+        if (GameManager.instance != null && GameManager.instance.isChoosingUpgrades)
+        {
+            GameManager.instance.EndLevelUp();
+        }
     }
 
     public void LevelUpWeapon(WeaponController weapon)
@@ -120,7 +145,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (passive == null)
         {
-            Debug.LogError("Weapon is null!");
+            Debug.LogError("Passive is null!");
             return;
         }
 

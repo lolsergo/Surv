@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 2300117548131575876, guid: 64979580888fabc42947f00b87e81e86, type: 3}
   _characterName: Cultist
   _baseWeapon: {fileID: 1027097230485392838, guid: c9219220a542c3142ae65f7a650d78e7, type: 3}
-  _basePassiveItem: {fileID: 0}
+  _basePassiveItem: {fileID: 70052084586872384, guid: 8cdea2f84300f5d44899672192bf53d4, type: 3}
   _maxHealth: 100
   _healthRegen: 1
   _moveSpeed: 5

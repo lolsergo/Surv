@@ -15,6 +15,6 @@ MonoBehaviour:
   moveSpeed: 2
   damage: 30
   maxHealth: 10
-  expPerKill: 9999999
+  expPerKill: 2000
   spawnRadius: 12
   despawnDistance: 20

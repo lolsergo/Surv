@@ -15,7 +15,7 @@ MonoBehaviour:
   _icon: {fileID: 3934776110834691092, guid: 64979580888fabc42947f00b87e81e86, type: 3}
   _characterName: Barbarian
   _baseWeapon: {fileID: 6055654875595998007, guid: dfb3ef15919b21f45812bb3b9b4de535, type: 3}
-  _basePassiveItem: {fileID: 0}
+  _basePassiveItem: {fileID: 6239829550182783356, guid: 77099220d21f64144a683e48899798ca, type: 3}
   _maxHealth: 5
   _healthRegen: 1
   _moveSpeed: 5

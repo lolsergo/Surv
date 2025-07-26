@@ -1,7 +1,8 @@
 using NUnit.Framework;
-using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
         CurrentGold.ForceUpdateUI();
 
         SpawnWeapon(characterData.BaseWeapon);
+        ApplyPassive(characterData.BasePassiveItem);
     }
 
     void Start()
@@ -89,24 +91,44 @@ public class PlayerController : MonoBehaviour
 
     void LevelUpChecker()
     {
+        // Запускаем корутину, если есть опыт для хотя бы одного уровня
         if (experience >= experienceCap)
         {
-            foreach (LevelRange levelRange in levelRanges)
+            StartCoroutine(ProcessLevelUps());
+        }
+    }
+
+    private IEnumerator ProcessLevelUps()
+    {
+        while (experience >= experienceCap)
+        {
+            // 1. Повышаем уровень
+            level++;
+
+            // 2. Сохраняем старый cap перед изменением
+            int previousCap = experienceCap;
+
+            // 3. Находим текущий диапазон и увеличиваем cap
+            foreach (LevelRange range in levelRanges)
             {
-                while (level <= levelRange.endingLevel && experience > experienceCap)
+                if (level >= range.startingLevel && level <= range.endingLevel)
                 {
-                    level++;
-                    experience -= experienceCap;
+                    experienceCap += range.experienceCapIncrease; // Ваш оригинальный подход!
+                    break;
                 }
-
-                experienceCap += levelRange.experienceCapIncrease;
             }
 
-            if (experience >= experienceCap)
-            {
-                level += (experience / experienceCap);
-                experience -= ((experience / experienceCap) * experienceCap);
-            }
+            // 4. Вычитаем опыт (только за текущий уровень)
+            experience -= previousCap;
+
+            // 5. Активируем экран улучшений
+            GameManager.instance.StartLevelUp();
+
+            // 6. Ждем выбора улучшения
+            yield return new WaitUntil(() => !GameManager.instance.isChoosingUpgrades);
+
+            // 7. Проверяем, хватает ли опыта на следующий уровень
+            if (experience < experienceCap) break;
         }
     }
 
@@ -128,23 +150,36 @@ public class PlayerController : MonoBehaviour
     {
         if (!GameManager.instance.isGameOver)
         {
+            GameManager.instance.AssignLevelReachedUI(level);
+            GameManager.instance.AssignSpriteUI(GameManager.instance.chosenWeaponsUI, inventory.weaponSlots);
+            GameManager.instance.AssignSpriteUI(GameManager.instance.chosenPassiveItemsUI, inventory.passiveSlots);
             GameManager.instance.GameOver();
         }
     }
 
-    public void SpawnWeapon(GameObject weapon)
+    public void SpawnWeapon(GameObject weaponPrefab)
     {
-        GameObject spawnedWeapon = Instantiate(weapon, transform.position, Quaternion.identity);
-        spawnedWeapon.transform.SetParent(transform);
-        IInventoryItem upgradableItem = spawnedWeapon.GetComponent<IInventoryItem>();
-        inventory.AddItem(upgradableItem);
+        if (weaponPrefab == null) return;
+        SpawnInventoryItem(weaponPrefab);
     }
 
-    public void ApplyPassive(GameObject passiveItem)
+    public void ApplyPassive(GameObject passiveItemPrefab)
     {
-        GameObject appliedPassive = Instantiate(passiveItem, transform.position, Quaternion.identity);
-        appliedPassive.transform.SetParent(transform);
-        IInventoryItem upgradableItem = appliedPassive.GetComponent<IInventoryItem>();
-        inventory.AddItem(upgradableItem);
+        if (passiveItemPrefab == null) return;
+        SpawnInventoryItem(passiveItemPrefab);
+    }
+
+    public void SpawnInventoryItem(GameObject itemPrefab)
+    {
+        GameObject appliedItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+        appliedItem.transform.SetParent(transform);
+        if (appliedItem.TryGetComponent<IInventoryItem>(out var upgradableItem))
+        {
+            inventory.AddItem(upgradableItem);
+        }
+        else
+        {
+            Debug.LogError($"Объект {itemPrefab.name} не имеет компонента IInventoryItem");
+        }
     }
 }

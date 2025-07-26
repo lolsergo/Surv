@@ -1,6 +1,9 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
+using AYellowpaper.SerializedCollections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +13,8 @@ public class GameManager : MonoBehaviour
     {
         Gameplay,
         Paused,
-        GameOver
+        GameOver,
+        LevelUp
     }
 
     public GameState currentState;
@@ -19,6 +23,7 @@ public class GameManager : MonoBehaviour
     [Header("Screens")]
     public GameObject pauseScreen;
     public GameObject resultsScreen;
+    public GameObject levelUpScreen;
 
     [Header("Current Stat Displays")]
     public TMP_Text currentHealthDisplay;
@@ -31,8 +36,22 @@ public class GameManager : MonoBehaviour
     [Header("Result Screen Displays")]
     public Image chosenCharacterImage;
     public TMP_Text chosenCharacterName;
+    public TMP_Text levelReachedDisplay;
+    public TMP_Text timeSurvivedDisplay;
+    public List<Image> chosenWeaponsUI = new();
+    public List<Image> chosenPassiveItemsUI = new();
+
+    [Header("Stopwatch")]
+    public float timeLimit;
+    private float stopwatchTime;
+    public TMP_Text stopwatchDisplay;
+
 
     public bool isGameOver = false;
+
+    public bool isChoosingUpgrades;
+
+    public GameObject playerObject;
 
     private void Awake()
     {
@@ -55,6 +74,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Gameplay:
                 CheckForPauseAndResume();
+                UpdateStopWatch();
                 break;
             case GameState.Paused:
                 CheckForPauseAndResume();
@@ -66,6 +86,15 @@ public class GameManager : MonoBehaviour
                     Time.timeScale = 0f;
                     Debug.Log("Game over");
                     DisplayResults();
+                }
+                break;
+            case GameState.LevelUp:
+                if (!isChoosingUpgrades)
+                {
+                    isChoosingUpgrades = true;
+                    Time.timeScale = 0f;
+                    Debug.Log("Upgrading screen activated");
+                    levelUpScreen.SetActive(true);
                 }
                 break;
             default:
@@ -121,10 +150,12 @@ public class GameManager : MonoBehaviour
     {
         pauseScreen.SetActive(false);
         resultsScreen.SetActive(false);
+        levelUpScreen.SetActive(false);
     }
 
     public void GameOver()
     {
+        timeSurvivedDisplay.text = stopwatchDisplay.text;
         ChangeState(GameState.GameOver);
     }
 
@@ -135,7 +166,69 @@ public class GameManager : MonoBehaviour
 
     public void AssignChosenCharacterUI(CharacterScriptableObject chosenCharacterData)
     {
-        chosenCharacterImage.sprite=chosenCharacterData.Icon;
+        chosenCharacterImage.sprite = chosenCharacterData.Icon;
         chosenCharacterName.text = chosenCharacterData.CharacterName;
+    }
+
+    public void AssignLevelReachedUI(int levelReachedData)
+    {
+        levelReachedDisplay.text = levelReachedData.ToString();
+    }
+
+    public void AssignSpriteUI(List<Image> list, AYellowpaper.SerializedCollections.SerializedDictionary<Image, string> dictionary)
+    {
+        if (dictionary.Count != list.Count)
+        {
+            Debug.Log("Count of weapon dictionary and list is different");
+            return;
+        }
+
+        int slotIndex = 0;
+
+        foreach (var pair in dictionary)
+        {
+            if (slotIndex >= list.Count)
+            {
+                break;
+            }
+            if (pair.Key.sprite != null)
+            {
+                list[slotIndex].sprite = pair.Key.sprite;
+                list[slotIndex].enabled = true;
+                slotIndex++;
+            }
+        }
+    }
+
+    private void UpdateStopWatch()
+    {
+        stopwatchTime += Time.deltaTime;
+
+        UpdateStopWatchDisplay();
+    }
+
+    private void UpdateStopWatchDisplay()
+    {
+        int minutes = Mathf.FloorToInt(stopwatchTime / 60);
+        int seconds = Mathf.FloorToInt(stopwatchTime % 60);
+
+        stopwatchDisplay.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void StartLevelUp()
+    {
+        ChangeState(GameState.LevelUp);
+        isChoosingUpgrades = true;
+        levelUpScreen.SetActive(true);
+        Time.timeScale = 0f;
+        playerObject.SendMessage("RemoveAndApplyUpgrades");
+    }
+
+    public void EndLevelUp()
+    {
+        isChoosingUpgrades = false;
+        Time.timeScale = 1f;
+        levelUpScreen.SetActive(false);
+        ChangeState(GameState.Gameplay);
     }
 }
