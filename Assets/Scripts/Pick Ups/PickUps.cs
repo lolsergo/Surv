@@ -1,16 +1,30 @@
 using UnityEngine;
 
-public class PickUps : MonoBehaviour
+public class PickUps : MonoBehaviour, ICollectible
 {
-    private void OnTriggerEnter2D(Collider2D collider)
+    protected bool hasBeenCollected = false;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collider.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            if (TryGetComponent(out ICollectible collectible))
-            {
-                collectible.Collect();
-            }
-            Destroy(gameObject);
+            Collect();
         }
+    }
+
+    public void Collect()
+    {
+        if (hasBeenCollected)
+        {
+            return;
+        }
+        OnCollected();
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnCollected()
+    {
+        hasBeenCollected = true;
+        Debug.Log($"{this.name} подобран!");
     }
 }

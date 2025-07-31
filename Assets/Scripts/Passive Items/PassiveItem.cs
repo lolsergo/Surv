@@ -27,4 +27,7 @@ public class PassiveItem : MonoBehaviour,IInventoryItem
                             inventory.passives,
                             w => w.passiveItemData.NextLevelPrefab);
     }
+
+    public bool CanUpgrade() =>
+        ItemLevel < GameManager.instance.upgradeConfig.GetPassiveItemMaxLevel(passiveItemData.ItemName);
 }

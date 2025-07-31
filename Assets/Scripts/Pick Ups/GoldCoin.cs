@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class GoldCoin : PickUps, ICollectible
+public class GoldCoin : PickUps
 {
-    int goldGranted;
+    private int goldGranted;
     public int maxGoldGranted;
 
-    void Awake()
+    private void Awake()
     {
         goldGranted = Random.Range(1, maxGoldGranted + 1);
     }
 
-    public void Collect()
+    protected override void OnCollected()
     {
+        base.OnCollected();
         PlayerController player = FindFirstObjectByType<PlayerController>();
         player.CurrentGold.IncreaseGold(goldGranted);
     }

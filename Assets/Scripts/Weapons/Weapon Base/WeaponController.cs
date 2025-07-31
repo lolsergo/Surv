@@ -5,7 +5,6 @@ public class WeaponController : MonoBehaviour, IInventoryItem
 {
     [SerializeReference]
     public WeaponScriptableObject weaponData;
-
     public int ItemLevel { get => weaponData.UpgradableItemLevel; }
     public GameObject NextLevelPrefab { get => weaponData.NextLevelPrefab; }
     public string ItemName { get => weaponData.ItemName; }
@@ -15,8 +14,6 @@ public class WeaponController : MonoBehaviour, IInventoryItem
     float currentCooldown;
 
     protected PlayerMovement playerMovement;
-
-    //public GameObject GetGameObject() => this.gameObject;
 
     protected virtual void Start()
     {
@@ -44,4 +41,7 @@ public class WeaponController : MonoBehaviour, IInventoryItem
                             inventory.weapons,
                             w => w.weaponData.NextLevelPrefab);
     }
+
+    public bool CanUpgrade() =>
+       ItemLevel < GameManager.instance.upgradeConfig.GetWeaponMaxLevel(weaponData.ItemName);
 }

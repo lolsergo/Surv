@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public GameState currentState;
     public GameState previousState;
 
+    [SerializeReference]
+    public UpgradeLevelsConfig upgradeConfig;
+
     [Header("Screens")]
     public GameObject pauseScreen;
     public GameObject resultsScreen;
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
         }
 
         DisableScreens();
+
+        upgradeConfig.Initialize();
     }
 
     private void Update()
@@ -205,6 +210,11 @@ public class GameManager : MonoBehaviour
         stopwatchTime += Time.deltaTime;
 
         UpdateStopWatchDisplay();
+
+        if (stopwatchTime > timeLimit)
+        {
+            playerObject.SendMessage("Kill");
+        }
     }
 
     private void UpdateStopWatchDisplay()

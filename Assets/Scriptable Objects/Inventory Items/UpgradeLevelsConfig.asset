@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b35042c5827cd4ea6c0f9adcbbf259, type: 3}
+  m_Name: UpgradeLevelsConfig
+  m_EditorClassIdentifier: 
+  weapons:
+  - weaponSO: {fileID: 11400000, guid: 8b27c1dd113bb654caab8c0764a8f7cc, type: 2}
+    maxLevel: 3
+    itemNameDisplay: Pentagram
+  - weaponSO: {fileID: 11400000, guid: 0cab3d67b26f51549b9b41267cff2808, type: 2}
+    maxLevel: 3
+    itemNameDisplay: Throwing Spear
+  passiveItems:
+  - itemSO: {fileID: 11400000, guid: 6798d25e827d3924890e467f7239da7a, type: 2}
+    maxLevel: 3
+    itemNameDisplay: Might
+  - itemSO: {fileID: 11400000, guid: c38db06eff8d4aa4fb1e8e049d9061bb, type: 2}
+    maxLevel: 3
+    itemNameDisplay: Magnet
+  - itemSO: {fileID: 11400000, guid: 698b37d8865ad9b49a05410b2918f571, type: 2}
+    maxLevel: 3
+    itemNameDisplay: Boots

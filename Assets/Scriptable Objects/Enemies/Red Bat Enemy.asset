@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Red Bat Enemy
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  damage: 30
-  maxHealth: 10
-  expPerKill: 2000
+  damage: 5
+  maxHealth: 5
+  expPerKill: 200
   spawnRadius: 12
   despawnDistance: 20

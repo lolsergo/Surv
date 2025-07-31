@@ -35,6 +35,7 @@ public class EnemySpawner : MonoBehaviour
     public int maxEnemiesAllowed;
     public bool isMaxEnemiesReached = false;
     public float waveInterval;
+    private bool isWaveActive = false;
 
     Transform player;
 
@@ -47,14 +48,14 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0)
+        if (currentWaveCount < waves.Count && waves[currentWaveCount].spawnCount == 0 && !isWaveActive)
         {
             StartCoroutine(BeginNextWave());
         }
 
         spawnTimer += Time.deltaTime;
 
-        if (spawnTimer > waves[currentWaveCount].spawnInterval)
+        if (spawnTimer >= waves[currentWaveCount].spawnInterval)
         {
             spawnTimer = 0f;
             SpawnEnemies();
@@ -63,10 +64,13 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator BeginNextWave()
     {
+        isWaveActive = true;
+
         yield return new WaitForSeconds(waveInterval);
 
         if (currentWaveCount < waves.Count - 1)
         {
+            isWaveActive = false;
             currentWaveCount++;
             CalculateWaveQuota();
         }
@@ -86,11 +90,6 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemies()
     {
-        if (enemiesAlive < maxEnemiesAllowed)
-        {
-            isMaxEnemiesReached = false;
-        }
-
         if (waves[currentWaveCount].spawnCount < waves[currentWaveCount].waveQuota && !isMaxEnemiesReached)
         {
             foreach (var enemyGroup in waves[currentWaveCount].enemyGroups)
@@ -118,5 +117,10 @@ public class EnemySpawner : MonoBehaviour
     public void OnEnemyKilled()
     {
         enemiesAlive--;
+
+        if (enemiesAlive < maxEnemiesAllowed)
+        {
+            isMaxEnemiesReached = false;
+        }
     }
 }

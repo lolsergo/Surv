@@ -2,7 +2,12 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,10 +23,9 @@ public class PlayerController : MonoBehaviour
     private int baseGold;
 
     [Header("Experience/Level")]
-    public int experience;
-    private int level;
-    [HideInInspector]
-    public int experienceCap;
+    private int experience;
+    private int level = 1;
+    private int experienceCap;
 
     [System.Serializable]
     public class LevelRange
@@ -38,25 +42,34 @@ public class PlayerController : MonoBehaviour
 
     public List<LevelRange> levelRanges;
 
-    InventoryManager inventory;
+    [SerializeField]
+    private InventoryManager inventory;
 
-    void Awake()
+    [SerializeField]
+    private UpgradeLevelsConfig upgradeLevelsConfig;
+    private int possibleMaxLevel;
+    private WeaponController baseWeapon;
+    private int baseWeaponLevel;
+    private PassiveItem basePassiveItem;
+    private int basePassiveItemLevel;
+    private int possibleWeaponLevels;
+    private int possiblePassiveItemLevels;
+
+    [Header("UI")]
+    public Image healthBar;
+    public Image expirienceBar;
+    public TMP_Text levelText;
+
+    private float _lastDisplayedHealth;
+
+    private void Awake()
     {
         characterData = CharacterSelector.GetData();
         CharacterSelector.instance.DestroySingleton();
 
-        inventory = GetComponent<InventoryManager>();
-
-        CurrentHealth.Initialize(characterData.MaxHealth);
-        CurrentHealthRegen.Value = characterData.HealthRegen;
-        CurrentMight.Value = characterData.Might;
-        CurrentMoveSpeed.Value = characterData.MoveSpeed;
-        CurrentMagnetRadius.Value = characterData.MagnetRadius;
-        CurrentGold.Value = baseGold;
-        CurrentGold.ForceUpdateUI();
-
-        SpawnWeapon(characterData.BaseWeapon);
-        ApplyPassive(characterData.BasePassiveItem);
+        InitializeBaseStats(characterData);
+        InitializeStartingEquipment(characterData);
+        CalculateLevelCaps();
     }
 
     void Start()
@@ -67,6 +80,9 @@ public class PlayerController : MonoBehaviour
         CurrentHealth.OnDeath += Kill;
 
         GameManager.instance.AssignChosenCharacterUI(characterData);
+
+        UpdateExpirienceBar();
+        UpdateLevelText();
     }
 
     private void Update()
@@ -81,6 +97,8 @@ public class PlayerController : MonoBehaviour
         }
 
         CurrentHealth.Regeneration(CurrentHealthRegen.Value);
+
+        UpdateHealthBar();
     }
 
     public void IncreaseExpirience(int amount)
@@ -91,44 +109,36 @@ public class PlayerController : MonoBehaviour
 
     void LevelUpChecker()
     {
-        // Запускаем корутину, если есть опыт для хотя бы одного уровня
         if (experience >= experienceCap)
         {
             StartCoroutine(ProcessLevelUps());
         }
+        UpdateExpirienceBar();
     }
 
     private IEnumerator ProcessLevelUps()
     {
-        while (experience >= experienceCap)
+        while (experience >= experienceCap && level < possibleMaxLevel)
         {
-            // 1. Повышаем уровень
             level++;
-
-            // 2. Сохраняем старый cap перед изменением
+            UpdateLevelText();
             int previousCap = experienceCap;
 
-            // 3. Находим текущий диапазон и увеличиваем cap
             foreach (LevelRange range in levelRanges)
             {
                 if (level >= range.startingLevel && level <= range.endingLevel)
                 {
-                    experienceCap += range.experienceCapIncrease; // Ваш оригинальный подход!
+                    experienceCap += range.experienceCapIncrease;
                     break;
                 }
             }
 
-            // 4. Вычитаем опыт (только за текущий уровень)
             experience -= previousCap;
-
-            // 5. Активируем экран улучшений
+            UpdateExpirienceBar();
             GameManager.instance.StartLevelUp();
-
-            // 6. Ждем выбора улучшения
             yield return new WaitUntil(() => !GameManager.instance.isChoosingUpgrades);
-
-            // 7. Проверяем, хватает ли опыта на следующий уровень
             if (experience < experienceCap) break;
+
         }
     }
 
@@ -138,6 +148,26 @@ public class PlayerController : MonoBehaviour
         {
             CurrentHealth.TryTakeDamage(damage);
         }
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (CurrentHealth.Value < characterData.MaxHealth &&
+        Mathf.Abs(CurrentHealth.Value - _lastDisplayedHealth) > 0.1f) // Фиксированный порог
+        {
+            healthBar.fillAmount = CurrentHealth.Value / characterData.MaxHealth;
+            _lastDisplayedHealth = CurrentHealth.Value;
+        }
+    }
+
+    private void UpdateExpirienceBar()
+    {
+        expirienceBar.fillAmount = (float)experience / experienceCap;
+    }
+
+    private void UpdateLevelText()
+    {
+        levelText.text = $"level {level}";
     }
 
     private void StartInvincibility()
@@ -154,6 +184,8 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.AssignSpriteUI(GameManager.instance.chosenWeaponsUI, inventory.weaponSlots);
             GameManager.instance.AssignSpriteUI(GameManager.instance.chosenPassiveItemsUI, inventory.passiveSlots);
             GameManager.instance.GameOver();
+
+            Destroy(gameObject, 0.1f);
         }
     }
 
@@ -181,5 +213,38 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError($"Объект {itemPrefab.name} не имеет компонента IInventoryItem");
         }
+    }
+
+    private void InitializeBaseStats(CharacterScriptableObject data)
+    {
+        CurrentHealth.Initialize(data.MaxHealth);
+        CurrentHealthRegen.Value = data.HealthRegen;
+        CurrentMight.Value = data.Might;
+        CurrentMoveSpeed.Value = data.MoveSpeed;
+        CurrentMagnetRadius.Value = data.MagnetRadius;
+        CurrentGold.Value = baseGold;
+        CurrentGold.ForceUpdateUI();
+    }
+
+    private void InitializeStartingEquipment(CharacterScriptableObject data)
+    {
+        baseWeapon = data.BaseWeapon.GetComponent<WeaponController>()
+    ?? throw new MissingComponentException($"No WeaponController on {data.BaseWeapon.name}");
+        baseWeaponLevel = baseWeapon.ItemLevel;
+
+        basePassiveItem = data.BasePassiveItem.GetComponent<PassiveItem>()
+        ?? throw new MissingComponentException($"No PassiveItem on {data.BasePassiveItem.name}");
+        basePassiveItemLevel = basePassiveItem.ItemLevel;
+
+        SpawnWeapon(data.BaseWeapon);
+        ApplyPassive(data.BasePassiveItem);
+    }
+
+    private void CalculateLevelCaps()
+    {
+        possibleWeaponLevels = upgradeLevelsConfig.weapons.Sum(entry => entry.maxLevel);
+        possiblePassiveItemLevels = upgradeLevelsConfig.passiveItems.Sum(entry => entry.maxLevel);
+        possibleMaxLevel = possibleWeaponLevels + possiblePassiveItemLevels
+                         - baseWeaponLevel - basePassiveItemLevel;
     }
 }

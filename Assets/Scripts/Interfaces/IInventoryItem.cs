@@ -6,6 +6,6 @@ public interface IInventoryItem
     int ItemLevel { get; }
     string ItemName { get; }
     Sprite Icon { get; }
-    string ItemDescription {  get; }
+    string ItemDescription { get; }
     void UpgradeInInventory(InventoryManager inventory);
 }
