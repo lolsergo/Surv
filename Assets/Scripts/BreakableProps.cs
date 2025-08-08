@@ -19,6 +19,7 @@ public class BreakableProps : MonoBehaviour, IDamageable
         if (health <= 0)
         {
             dropRateManager.Die();
+            Destroy(gameObject);
         }
     }
 }

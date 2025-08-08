@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +60,9 @@ public class PlayerController : MonoBehaviour
     public TMP_Text levelText;
 
     private float _lastDisplayedHealth;
+
+    [SerializeField]
+    private ParticleSystem damageEffect;
 
     private void Awake()
     {
@@ -147,6 +149,10 @@ public class PlayerController : MonoBehaviour
         if (!isInvincible)
         {
             CurrentHealth.TryTakeDamage(damage);
+            if (damageEffect)
+            {
+                Instantiate(damageEffect,transform.position, Quaternion.identity);
+            }
         }
     }
 

@@ -17,7 +17,6 @@ public class DropRateManager : MonoBehaviour
     public void Die()
     {
         DropItem();
-        Destroy(gameObject);
     }
 
     private void DropItem()

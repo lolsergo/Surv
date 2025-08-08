@@ -26,4 +26,8 @@ public class EnemyScriptableObject : ScriptableObject
     [SerializeField]
     int despawnDistance;
     public int DespawnDistance { get => despawnDistance; private set => despawnDistance = value; }
+
+    [SerializeField]
+    float _knockbackResistance;
+    public float KnockbackResistance { get => _knockbackResistance; private set => _knockbackResistance = value; }
 }

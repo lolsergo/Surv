@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05bed17bec3e434c9384dc57310c5db, type: 3}
+  m_Name: Spear+Might
+  m_EditorClassIdentifier: 
+  baseWeaponData: {fileID: 11400000, guid: 0cab3d67b26f51549b9b41267cff2808, type: 2}
+  catalystPassiveItemData: {fileID: 11400000, guid: 6798d25e827d3924890e467f7239da7a, type: 2}
+  evolvedWeaponData: {fileID: 11400000, guid: 3b1f3d3419778d84ea75e50ab5005a5e, type: 2}
+  evolvedWeapon: {fileID: 6055654875595998007, guid: 516afcc0e6fb4bb4da669c390fbfbe2e, type: 3}

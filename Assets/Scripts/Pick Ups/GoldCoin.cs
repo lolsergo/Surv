@@ -14,6 +14,6 @@ public class GoldCoin : PickUps
     {
         base.OnCollected();
         PlayerController player = FindFirstObjectByType<PlayerController>();
-        player.CurrentGold.IncreaseGold(goldGranted);
+        player.CurrentGold.Add(goldGranted);
     }
 }

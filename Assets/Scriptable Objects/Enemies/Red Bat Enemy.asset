@@ -18,3 +18,4 @@ MonoBehaviour:
   expPerKill: 200
   spawnRadius: 12
   despawnDistance: 20
+  _knockbackResistance: 1

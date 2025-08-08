@@ -1,9 +1,10 @@
+using AYellowpaper.SerializedCollections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using AYellowpaper.SerializedCollections;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -240,5 +241,19 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         levelUpScreen.SetActive(false);
         ChangeState(GameState.Gameplay);
+    }
+
+    public void ReturnToTitleScreen()
+    {
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        if (player != null)
+        {
+            player.CurrentGold.SaveToProfile();
+            Destroy(player.gameObject);
+        }
+
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("Title Screen");
     }
 }

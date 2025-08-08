@@ -2,14 +2,16 @@ using AYellowpaper.SerializedCollections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
+using static UpgradeSystem;
 
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
+
+    private UpgradeSystem _upgradeSystem;
 
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _upgradeSystem = GetComponent<UpgradeSystem>();
     }
 
     [SerializeField]
@@ -34,17 +38,19 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     public SerializedDictionary<Image, string> passiveSlots = new();
 
+    public List<WeaponEvolutionBlueprint> weaponEvolutions = new();
+
     public void AddItem(IInventoryItem item)
     {
         switch (item)
         {
             case WeaponController weapon:
                 weapons.Add(weapon, (weapon.weaponData.UpgradableItemLevel));
-                AddImage(weapon.weaponData.ItemName, weapon.weaponData.Icon, weaponSlots);
+                AddOrUpdateImage(weapon.weaponData.ItemName, weapon.weaponData.Icon, weaponSlots);
                 break;
             case PassiveItem passive:
                 passives.Add(passive, (passive.passiveItemData.UpgradableItemLevel));
-                AddImage(passive.passiveItemData.ItemName, passive.passiveItemData.Icon, passiveSlots);
+                AddOrUpdateImage(passive.passiveItemData.ItemName, passive.passiveItemData.Icon, passiveSlots);
                 break;
             default:
                 throw new ArgumentException("Неизвестный тип предмета");
@@ -56,23 +62,34 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddImage(string itemName, Sprite itemSprite, SerializedDictionary<Image, string> dictionary)
+    public void AddOrUpdateImage(string itemName, Sprite newSprite, SerializedDictionary<Image, string> dictionary)
     {
-        if (dictionary.ContainsValue(itemName))
+        // 1. Сначала проверяем, есть ли уже такой предмет
+        foreach (var pair in dictionary)
         {
-            return;
+            if (pair.Value == itemName)
+            {
+                // Обновляем спрайт для существующего
+                pair.Key.sprite = newSprite;
+                pair.Key.enabled = true;
+                return;
+            }
         }
 
+        // 2. Если предмет новый - ищем пустой слот
         foreach (var slot in dictionary.Keys.ToList())
         {
             if (string.IsNullOrEmpty(dictionary[slot]))
             {
                 dictionary[slot] = itemName;
-                slot.sprite = itemSprite;
+                slot.sprite = newSprite;
                 slot.enabled = true;
                 return;
             }
         }
+
+        // 3. Если нет свободных слотов
+        Debug.LogWarning($"No empty slots available for {itemName}");
     }
 
     public void LevelUpItem<T>(T item, SerializedDictionary<T, int> dictionary, Func<T, GameObject> getNextLevelPrefab)
@@ -150,5 +167,85 @@ public class InventoryManager : MonoBehaviour
         }
 
         LevelUpItem(passive, passives, p => p.passiveItemData.NextLevelPrefab);
+    }
+
+    public List<WeaponEvolutionBlueprint> GetPossibleEvolutions()
+    {
+        return weaponEvolutions
+            .Where(evo =>
+                // Проверяем оружие (единственное в инвентаре)
+                weapons.Keys.Any(w =>
+                    w.weaponData.ItemName == evo.baseWeaponData.ItemName &&
+                    w.weaponData.UpgradableItemLevel >= evo.baseWeaponData.UpgradableItemLevel) &&
+
+                // Проверяем пассивку (единственную в инвентаре)
+                passives.Keys.Any(p =>
+                    p.passiveItemData.ItemName == evo.catalystPassiveItemData.ItemName &&
+                    p.passiveItemData.UpgradableItemLevel >= evo.catalystPassiveItemData.UpgradableItemLevel)
+            )
+            .ToList();
+    }
+
+    public bool TryExecuteEvolution(WeaponEvolutionBlueprint evolution)
+    {
+        // 1. Ищем нужное оружие среди ключей словаря
+        WeaponController playerWeapon = weapons.Keys
+            .FirstOrDefault(w => w.weaponData.ItemName == evolution.baseWeaponData.ItemName);
+
+        if (playerWeapon == null)
+        {
+            Debug.LogWarning($"Не найдено базовое оружие: {evolution.baseWeaponData.ItemName}");
+            return false;
+        }
+
+        // 2. Ищем нужную пассивку (аналогично)
+        PassiveItem playerPassive = passives.Keys
+            .FirstOrDefault(p => p.passiveItemData.ItemName == evolution.catalystPassiveItemData.ItemName);
+
+        if (playerPassive == null)
+        {
+            Debug.LogWarning($"Не найдена пассивка: {evolution.catalystPassiveItemData.ItemName}");
+            return false;
+        }
+
+        // 3. Проверяем уровни
+        if (playerWeapon.weaponData.UpgradableItemLevel < evolution.baseWeaponData.UpgradableItemLevel ||
+            playerPassive.passiveItemData.UpgradableItemLevel < evolution.catalystPassiveItemData.UpgradableItemLevel)
+        {
+            Debug.Log("Недостаточный уровень оружия/пассивки");
+            return false;
+        }
+
+        // 4. Если всё ок — запускаем эволюцию
+        ExecuteEvolution(evolution, playerWeapon);
+        return true;
+    }
+
+    private void ExecuteEvolution(WeaponEvolutionBlueprint evolution, WeaponController weapon)
+    {
+        GameObject evolvedWeapon = Instantiate(evolution.evolvedWeapon, transform.position, Quaternion.identity);
+        WeaponController evolvedWeaponController = evolvedWeapon.GetComponent<WeaponController>();
+
+        evolvedWeapon.transform.SetParent(transform);
+        weapons.Remove(weapon);
+        ReplaceEvolvedWeaponData(evolvedWeaponController);
+        AddItem(evolvedWeaponController);
+        Destroy(weapon.gameObject);
+    }
+
+    private void ReplaceEvolvedWeaponData(WeaponController evolvedWeapon)
+    {
+        int index = _upgradeSystem.weaponUpgradeOptions.FindIndex(upgrade => upgrade.weaponData.ItemName == evolvedWeapon.ItemName);
+
+        if (index != -1)
+        {
+            _upgradeSystem.weaponUpgradeOptions[index] = new WeaponUpgrade
+            {
+                initialWeapon = evolvedWeapon.weaponData.Prefab,
+                weaponData = evolvedWeapon
+            };
+        }
+
+        _upgradeSystem.RemoveMaxLevelWeapons();
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using UnityEditor;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 [System.Serializable]

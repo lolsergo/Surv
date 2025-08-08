@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5973b0d76941f2b4b9325884d9f6b9f7, type: 3}
   m_Name: Pentagram Weapon Level 3
   m_EditorClassIdentifier: 
+  _itemName: Pentagram
   _upgradableItemLevel: 3
   _nextLevelPrefab: {fileID: 0}
-  _itemName: Pentagram
   _itemDescription: Cooldown -0.5s and damage +2
   _icon: {fileID: 21300000, guid: ce97ed6319c02994eb03c52ea1a0b418, type: 2}
   _prefab: {fileID: 1807295204169746668, guid: 67eb0179725c4674f9fe27b7f6be8305, type: 3}
   _damage: 7
   _cooldownDuration: 2
+  _knockbackForce: 5
+  _knockbackDuration: 0.2

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PickUps : MonoBehaviour, ICollectible
 {
     protected bool hasBeenCollected = false;
+    public virtual bool IsMagnetizable { get; set; } = true;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

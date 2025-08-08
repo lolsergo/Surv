@@ -6,7 +6,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class UpgradeSystem : MonoBehaviour
 {
@@ -61,7 +60,7 @@ public class UpgradeSystem : MonoBehaviour
         {
             availablePassiveIndices.Add(i);
         }
-
+        
 
         foreach (var upgradeOption in upgradeUIOptions)
         {

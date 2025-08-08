@@ -9,7 +9,6 @@ public class WeaponBehaviour : MonoBehaviour
     protected float BaseDamage => weaponData.Damage;
     protected float CurrentDamage { get; private set; }
 
-    [SerializeField]
     protected float currentCooldownDuration;
     [SerializeField]
     protected float destroyAfterSecons;
@@ -44,6 +43,14 @@ public class WeaponBehaviour : MonoBehaviour
     protected virtual void ApplyDamage(IDamageable target)
     {
         target.TakeDamage(CurrentDamage);
+        if (target is IKnockbackable knockbackable)
+        {
+            knockbackable.ApplyKnockback(
+                transform.position,
+                weaponData.KnockbackForce,
+                weaponData.KnockbackDuration);
+        }
+
         AfterDamageApplied();
     }
 
