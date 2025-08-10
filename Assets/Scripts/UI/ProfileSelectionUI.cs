@@ -37,11 +37,9 @@ public class ProfileSelectionUI : MonoBehaviour
         foreach (Transform child in profilesContainer)
             Destroy(child.gameObject);
 
-        // Создаем кнопки для каждого профиля
-        string[] profiles = Directory.GetFiles(Application.persistentDataPath, "*.profile");
-        foreach (string path in profiles)
+        // Используем AvailableProfiles из ProfileManager вместо прямого доступа к файлам
+        foreach (string profileName in ProfileManager.AvailableProfiles)
         {
-            string profileName = Path.GetFileNameWithoutExtension(path);
             CreateProfileButton(profileName);
         }
     }
@@ -52,7 +50,6 @@ public class ProfileSelectionUI : MonoBehaviour
         deleteModeButton.GetComponentInChildren<TMP_Text>().text =
             isDeleteMode ? "Отменить" : "Удалить профиль";
 
-        // Обновляем все кнопки
         foreach (Transform child in profilesContainer)
         {
             var button = child.GetComponent<ProfileButton>();
@@ -75,16 +72,13 @@ public class ProfileSelectionUI : MonoBehaviour
     public void CreateProfile()
     {
         string name = newProfileInput.text.Trim();
-        if (!string.IsNullOrEmpty(name))
-        {
-            // Создаем файл профиля
-            File.WriteAllText(
-                Path.Combine(Application.persistentDataPath, $"{name}.profile"),
-                "{}"
-            );
-            RefreshProfiles();
-            newProfileInput.text = "";
-        }
+        ProfileManager.CreateProfile(name, error => {
+            // Здесь можно показать сообщение об ошибке пользователю
+            Debug.LogError(error);
+        });
+
+        RefreshProfiles();
+        newProfileInput.text = "";
     }
 
     public void OnProfileSelected(string profileName)
@@ -96,7 +90,7 @@ public class ProfileSelectionUI : MonoBehaviour
         }
         else
         {
-            // Обычный выбор профиля
+            // Теперь правильно выбираем профиль
             ProfileManager.SwitchProfile(profileName);
             SceneManager.LoadScene("Title Screen");
         }
@@ -104,21 +98,10 @@ public class ProfileSelectionUI : MonoBehaviour
 
     public void ConfirmDelete()
     {
-        string path = Path.Combine(Application.persistentDataPath, $"{selectedProfileToDelete}.profile");
-        if (File.Exists(path))
+        if (!string.IsNullOrEmpty(selectedProfileToDelete))
         {
-            File.Delete(path);
-
-            // Находим и удаляем только соответствующую кнопку
-            foreach (Transform child in profilesContainer)
-            {
-                var button = child.GetComponent<ProfileButton>();
-                if (button != null && button.ProfileName == selectedProfileToDelete)
-                {
-                    Destroy(child.gameObject);
-                    break;
-                }
-            }
+            ProfileManager.DeleteProfile(selectedProfileToDelete);
+            RefreshProfiles();
         }
         deleteConfirmPanel.SetActive(false);
     }

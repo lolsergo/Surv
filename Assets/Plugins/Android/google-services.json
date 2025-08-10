@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140669163057",
+    "project_id": "survivor-god",
+    "storage_bucket": "survivor-god.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140669163057:android:d1b2606f7363e8f4aea710",
+        "android_client_info": {
+          "package_name": "com.BarbosCompany.Survivor_god"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1fbiHpI85gWJeCe1MYCi7PSKa0d6l-Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

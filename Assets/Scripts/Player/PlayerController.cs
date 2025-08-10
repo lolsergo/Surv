@@ -123,6 +123,7 @@ public class PlayerController : MonoBehaviour
         while (experience >= experienceCap && level < possibleMaxLevel)
         {
             level++;
+            AnalyticsManager.Instance.LevelUp(level);
             UpdateLevelText();
             int previousCap = experienceCap;
 
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
             CurrentHealth.TryTakeDamage(damage);
             if (damageEffect)
             {
-                Instantiate(damageEffect,transform.position, Quaternion.identity);
+                Instantiate(damageEffect, transform.position, Quaternion.identity);
             }
         }
     }
